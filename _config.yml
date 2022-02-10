@@ -3,3 +3,6 @@ title: Photo Memory
 description: Play memory with your photos!
 logo: /images/CardBack.png
 show_downloads: false
+
+github:
+  is_project_page: false
