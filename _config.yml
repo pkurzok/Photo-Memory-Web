@@ -6,3 +6,8 @@ show_downloads: false
 
 github:
   is_project_page: false
+  
+# About/contact
+author:
+  name:       Peter Kurzok © 2020
+  url:        https://peterkurzok.de
