@@ -4,8 +4,13 @@
 
 ## About the game
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam quibus rebus efficiuntur voluptates, eae non sunt in potestate sapientis. Vestri haec verecundius, illi fortasse constantius. Quo modo autem optimum, si bonum praeterea nullum est? Deinde prima illa, quae in congressu solemus: Quid tu, inquit, huc? Duo Reges: constructio interrete. Cur, nisi quod turpis oratio est? Immo vero, inquit, ad beatissime vivendum parum est, ad beate vero satis.
+Photo Memory brings the classic board game Memory to your iPhone and iPad. With one special feature: Play with your own photos! Choose your favorite pictures from the photo library and start playing! 
+
+In addition, you can determine the size of the game field and choose from seven different backgrounds.
 
 ### Screenshots
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam quibus rebus efficiuntur voluptates, eae non sunt in potestate sapientis. Vestri haec verecundius, illi fortasse constantius. Quo modo autem optimum, si bonum praeterea nullum est? Deinde prima illa, quae in congressu solemus: Quid tu, inquit, huc? Duo Reges: constructio interrete. Cur, nisi quod turpis oratio est? Immo vero, inquit, ad beatissime vivendum parum est, ad beate vero satis.
+![Screenshot 1](images/screenshot1.jpg)
+![Screenshot 2](images/screenshot2.jpg)
+![Screenshot 3](images/screenshot3.jpg)
+![Screenshot 4](images/screenshot4.jpg)
