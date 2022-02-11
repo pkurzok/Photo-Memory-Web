@@ -10,7 +10,7 @@ In addition, you can determine the size of the game field and choose from seven 
 
 ### Screenshots
 
-![Screenshot 1](images/screenshot1.jpg)
-![Screenshot 2](images/screenshot2.jpg)
-![Screenshot 3](images/screenshot3.jpg)
-![Screenshot 4](images/screenshot4.jpg)
+![Screenshot 1](images/screenshot1.jpeg)
+![Screenshot 2](images/screenshot2.jpeg)
+![Screenshot 3](images/screenshot3.jpeg)
+![Screenshot 4](images/screenshot4.jpeg)
