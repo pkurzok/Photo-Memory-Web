@@ -41,4 +41,4 @@ We may update our Privacy Policy from time to time. Thus, you are advised to rev
 
 ## Contact Us
 
-If you have any questions or suggestions about our Privacy Policy, you may email us at [photo-memory-privacy@peterkurzok.de](mailto:photo-memory-privacy@peterkurzok.de).
+If you have any questions or suggestions about our Privacy Policy, you may email us at [photo-memo-privacy@peterkurzok.de](mailto:photo-memo-privacy@peterkurzok.de).
