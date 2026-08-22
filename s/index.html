@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en" data-light-theme="light" data-dark-theme="dark">
+  <head>
+    <base href="../" />
+    <!-- Static, because a crawler does not run JavaScript. Messages, WhatsApp and Slack build their
+         rich preview from exactly these four tags, so nothing here may be injected at runtime. -->
+    <meta property="og:site_name" content="Photo Memo+: Picture Pairs" />
+    <meta property="og:title" content="A Photo Memo+ picture set" />
+    <meta property="og:description" content="Someone shared a set of photos to play the pairs game with. Open the link on an iPhone with Photo Memo+ installed." />
+    <meta property="og:image" content="https://photo-memo.peterkurzok.de/images/app-icon.png" />
+    <meta property="og:url" content="https://photo-memo.peterkurzok.de/s/" />
+    <meta name="twitter:title" content="A Photo Memo+ picture set" />
+    <meta name="twitter:domain" content="photo-memo.peterkurzok.de" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:dnt" content="on" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Peter Kurzok" />
+    <title>A Photo Memo+ picture set</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-icons.min.css" rel="stylesheet" />
+    <link href="css/ignite-core.min.css" rel="stylesheet" />
+    <link href="https://photo-memo.peterkurzok.de/s/" rel="canonical" />
+    <link href="images/favicon.png" rel="icon" />
+    <link href="images/app-icon.png" rel="apple-touch-icon" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <!-- Nobody should land here from a search result: the page has nothing to say without the
+         fragment, and the fragment is the one part of the URL a crawler never receives. -->
+    <meta name="robots" content="noindex" />
+    <style>
+:root {
+    --primary-color: #637b90;
+    --primary-rgb: 99, 123, 144;
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color-scheme: light dark;
+}
+.share-lede { max-width: 34rem; margin-inline: auto; }
+.share-lede + .share-lede { margin-top: 2.5rem; padding-top: 2.5rem; border-top: 1px solid rgba(var(--primary-rgb), 0.25); }
+</style>
+    <!-- The Smart App Banner. `app-argument` is filled in by the script at the end of the body,
+         because it has to carry the fragment and the fragment is not knowable when this file is
+         written. With it, Safari's OPEN hands the whole URL — key included — to the installed app;
+         without it, OPEN launches Photo Memo+ to an empty board and the set is lost. -->
+    <meta name="apple-itunes-app" content="app-id=1607756335" />
+  </head>
+  <body data-site-classes="site-shell">
+    <header>
+      <nav class="site-header navbar navbar-expand-md">
+        <div class="container flex-wrap flex-lg-nowrap">
+          <div class="me-2 me-md-auto">
+            <a href="./" class="brand-link d-inline-flex align-items-center navbar-brand"><span class="brand-name">Photo Memo+</span></a>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main class="site-main">
+      <div class="ig-main-content">
+        <div id="hero" class="hero hero-centered">
+          <div class="container">
+            <div class="hero-content">
+              <img src="images/app-icon.png" alt="Photo Memo+ app icon" class="hero-app-icon" />
+
+              <div class="share-lede" lang="en">
+                <h1 class="hero-title">Someone shared a picture set with you</h1>
+                <p class="hero-subtitle">Open this link on your iPhone with Photo Memo+ installed, and the photos are dealt onto the board straight away. Links work for seven days. The photos are encrypted on the sender's iPhone before they leave it, so nobody in between — us included — can see them.</p>
+                <div class="hero-cta">
+                  <a href="https://apps.apple.com/app/id1607756335" class="store-badge-link"><img src="images/app-store-download-black.svg" alt="Download on the App Store" class="store-badge store-badge-light-mode" /><img src="images/app-store-download-white.svg" alt="Download on the App Store" class="store-badge store-badge-dark-mode" /></a>
+                </div>
+              </div>
+
+              <div class="share-lede" lang="de">
+                <h2 class="hero-title">Jemand hat ein Bilderset mit dir geteilt</h2>
+                <p class="hero-subtitle">Öffne diesen Link auf deinem iPhone, auf dem Photo Memo+ installiert ist — die Fotos landen sofort auf dem Spielfeld. Links gelten sieben Tage. Die Fotos werden auf dem iPhone des Absenders verschlüsselt, bevor sie es verlassen; niemand dazwischen kann sie sehen, wir eingeschlossen.</p>
+                <div class="hero-cta">
+                  <a href="https://apps.apple.com/app/id1607756335" class="store-badge-link"><img src="images/app-store-download-black.svg" alt="Im App Store laden" class="store-badge store-badge-light-mode" /><img src="images/app-store-download-white.svg" alt="Im App Store laden" class="store-badge store-badge-dark-mode" /></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div class="site-footer">
+      <div class="container">
+        <div class="footer-copyright">
+          <div class="footer-links">
+            <a href="privacy/" class="footer-privacy-link">Privacy Policy</a>
+          </div>
+          <p>© 2026 Peter Kurzok</p>
+          <a href="https://kickstart.tools" class="footer-kickstart-link">Built with Kickstart</a>
+        </div>
+      </div>
+    </div>
+    <script>
+      // The set itself is never shown here, and cannot be: the record id and its key live in the
+      // URL fragment, which RFC 3986 §3.5 keeps on the client and out of every request. This server
+      // sees a plain GET for /s/ and learns nothing about what was shared — which is the point.
+      //
+      // The one thing the fragment is needed for is the Smart App Banner's OPEN button, and that
+      // runs here, in the reader's browser.
+      document.querySelector('meta[name="apple-itunes-app"]')
+        .setAttribute('content', 'app-id=1607756335, app-argument=' + window.location.href);
+    </script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/ignite-core.js"></script>
+  </body>
+</html>
