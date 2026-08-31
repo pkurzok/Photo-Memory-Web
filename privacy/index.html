@@ -58,38 +58,39 @@
             <div class="privacy-content">
               <div>
                 <h1>Privacy Policy</h1>
-                <p>Last updated: 20 August 2026</p>
-                <p>Photo Memo+ is a free app for iPhone and iPad, made by Peter Kurzok, with one optional Pro purchase. This page explains what the app does and does not do with your data.</p>
-                <p>There is no account and no login. We run no server of our own, so there is nowhere for your game to be sent even if we wanted it.</p>
+                <p><em>Last updated: 31 August 2026</em></p>
+                <p>Photo Memo+ is a free app for iPhone and iPad, made by Peter Kurzok, with an optional one-off Pro purchase. This page explains what the app does and does not do with your data.</p>
+                <p>There is no account and no login. We run no server of our own. The single exception is a picture set you deliberately choose to share, which is encrypted on your device before it goes anywhere — that is described in full under <em>Sharing picture sets</em> below.</p>
                 <h2>Your photos</h2>
-                <p>The pictures you choose are copied into the app’s own storage on your device, so that a board still works after the original has been moved or deleted. That copy never leaves your device. Your photos are not uploaded, not shared, and not visible to us or to anyone else.</p>
+                <p>The pictures you choose are copied into the app’s own storage on your device, so that a board still works after the original has been moved or deleted. <strong>That copy stays on your device.</strong> It is not uploaded, not shared, and not visible to us — unless you yourself share a picture set, which is the one case described below.</p>
                 <p>The app asks iOS for access to your photo library only at the moment you pick pictures, and iOS decides what it hands over. Removing the app removes its copies with it.</p>
-                <p>The player names you type, your high scores and your settings are stored on the device in the same way, and are likewise never uploaded.</p>
+                <p>The player names you type, your high scores and your settings are stored on the device in the same way, and are never uploaded.</p>
+                <h2>Sharing picture sets</h2>
+                <p>When you open the share sheet for a picture set, the photos in that set are packed up and <strong>encrypted on your device</strong>. Only the encrypted copy is uploaded, to our iCloud (CloudKit) container. The key that opens it travels only inside the link you send, in the part of the address that is never sent to any web server — so we cannot read what you share, and neither can anyone we host with.</p>
+                <p>The encrypted copy is kept for up to <strong>7 days</strong> and then deleted. Anyone you give the link to can open it during those 7 days; after that the link stops working and the copy is gone.</p>
+                <p>This happens when the share sheet <strong>opens</strong>, so a set is uploaded even if you close the sheet without sending it. That copy is deleted on the same 7-day schedule as any other.</p>
+                <p>Sending needs an iCloud account on your device. <strong>Receiving needs none</strong> — no account, no sign-in. No analytics event ever carries the link, the key, or the photos.</p>
+                <h2>Advertising — Kickstart Exchange</h2>
+                <p>The free version can show a single small banner below the board, supplied by <strong>Kickstart Exchange</strong>. It promotes other independent apps. Buying Pro removes it.</p>
+                <p>The banner reports which advert was shown and whether it was tapped. That is <strong>not tied to your name, your Apple Account or any identifier we could use to recognise you</strong>, and it is not used to track you across other companies’ apps or websites. It never includes your photos, your picture sets or the player names you type.</p>
+                <p>Kickstart Exchange’s own privacy notice: <a href="https://exchange.kickstart.tools/privacy">https://exchange.kickstart.tools/privacy</a></p>
                 <h2>Crash reporting — Sentry</h2>
-                <p>If the app crashes, a crash report is sent to Sentry so the fault can be found and fixed. A report describes the state of the program — which code failed, on which iOS version and which device model. It contains none of your photos and none of your game data.</p>
-                <p>Crash reporting is controlled by Crash Reports in the app’s Settings. It is on by default. Switching it off shuts the Sentry SDK down immediately, without a restart, and nothing further is sent.</p>
+                <p>If the app crashes, a crash report is sent to <strong>Sentry</strong> so the fault can be found and fixed. A report describes the state of the program — which code failed, on which iOS version and which device model. It contains none of your photos and none of your game data.</p>
+                <p>Crash reporting is controlled by <strong>Crash Reports</strong> in the app’s Settings. It is <strong>on by default</strong>. Switching it off shuts the Sentry SDK down immediately, without a restart, and nothing further is sent.</p>
                 <p>Sentry’s own privacy policy: <a href="https://sentry.io/privacy/">https://sentry.io/privacy/</a></p>
                 <h2>Usage statistics — Mixpanel</h2>
-                <p>Anonymous usage statistics are sent to Mixpanel to show which parts of the app are actually used. The events are things like which screen was opened, which board size was chosen, which table background was picked, how many players were playing, and whether sound or haptics are switched on. They are not tied to a name or an account.</p>
-                <p>These events never include your photos and never include the player names you type.</p>
+                <p>Anonymous usage statistics are sent to <strong>Mixpanel</strong> to show which parts of the app are actually used. The events are things like <em>which screen was opened</em>, <em>which board size was chosen</em>, <em>which table background was picked</em>, <em>how many players were playing</em>, and whether sound or haptics are switched on. They are not tied to a name or an account.</p>
+                <p>These events <strong>never include your photos and never include the player names you type.</strong></p>
                 <p>One exception is worth stating plainly: if you deliberately send feedback from Settings, the message you write is transmitted along with it. That happens only when you choose to send it.</p>
-                <p>Usage statistics are controlled by Data Analytics in the app’s Settings. This is likewise on by default and can be switched off at any time.</p>
+                <p>Usage statistics are controlled by <strong>Data Analytics</strong> in the app’s Settings. This is likewise <strong>on by default</strong> and can be switched off at any time.</p>
                 <p>Mixpanel’s own privacy policy: <a href="https://mixpanel.com/legal/privacy-policy/">https://mixpanel.com/legal/privacy-policy/</a></p>
-                <h2>Advertising — Kickstart Exchange</h2>
-                <p>A small advert for another independently made app can appear beneath the board. It comes from Kickstart Exchange, a cross-promotion service that independent developers use to show each other’s apps. Buying Photo Memo+ Pro removes it.</p>
-                <p>Kickstart Exchange matches apps, not people. It does not track you, does not identify your device and does not build a profile of your behaviour. No advertising identifier is used, which is why iOS never asks you for tracking permission.</p>
-                <p>To pick an advert and count it, the service is told which app is asking — its identifier and version — the platform it is running on, and your App Store country. The country is there so the service does not advertise an app you cannot download; it is a store region, not a location, and it does not identify you. A signed receipt from Apple, proving the app is genuine, is checked at that moment and then discarded.</p>
-                <p>Views and taps are counted for the app as a whole, never for a person. Kickstart Exchange keeps those delivery records for about 30 days.</p>
-                <p>Tapping an advert opens that app’s page in the App Store. Nothing else in the game leads out to the open web.</p>
-                <p>Kickstart Exchange’s own privacy notice: <a href="https://exchange.kickstart.tools/privacy">https://exchange.kickstart.tools/privacy</a></p>
                 <h2>Purchases</h2>
-                <p>Photo Memo+ is free to download and free to play. One optional in-app purchase, Photo Memo+ Pro, removes the advert, lifts the daily round limit, allows as many saved picture sets as you like and unlocks the larger boards. The app also offers optional tips, which unlock nothing at all — a tip is a tip.</p>
+                <p>Photo Memo+ is <strong>free to download and free to play</strong>. Photo Memo+ Pro is a single purchase that removes the banner and lifts the free tier’s limits. The app also offers optional tips, which unlock nothing — a tip is a tip.</p>
+                <p>Anyone who bought Photo Memo+ while it was a paid app keeps every Pro feature, free and forever, with nothing to buy and nothing to restore.</p>
                 <p>Every purchase is handled by Apple. Payment details are never seen by us and never reach the app; we only learn that a purchase succeeded.</p>
-                <p>To work out whether Pro is already yours — which it is, free and forever, for everyone who bought Photo Memo+ while it was a paid app — the app asks Apple for this app’s own purchase record on your Apple Account. It reads two things from it: the app version the app was first bought under, and the date of that purchase. The answer stays on your device, is never sent anywhere, and identifies nobody.</p>
                 <p>Apple’s privacy policy: <a href="https://www.apple.com/legal/privacy/">https://www.apple.com/legal/privacy/</a></p>
                 <h2>Children</h2>
-                <p>The app shows only the pictures that are already on the device. There is no user-generated content and no chat.</p>
-                <p>A small advert for another app can appear beneath the board, as described above, and Pro removes it. It is not aimed at the person playing — no tracking, no profile, no advertising identifier — and the apps it can show are other independently made apps for Apple platforms. Tapping it leads to that app’s App Store page and nowhere else.</p>
+                <p>The app plays with the pictures that are already on the device, and with any picture set someone shares with you. There is no user-generated content, no chat and no link out to the open web from inside the game. The free version shows one banner advertising other apps, described above; Pro removes it.</p>
                 <h2>Changes to this policy</h2>
                 <p>If this policy changes, the new version appears on this page with a new date at the top.</p>
                 <h2>Contact</h2>
