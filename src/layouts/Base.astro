@@ -4,7 +4,7 @@ import appIcon from '../assets/images/app-icon.png';
 import wood from '../assets/images/table/wood-1.jpg';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import { app, type Lang } from '../data/site';
+import { app, content, langs, locales, translatedPath, type Lang } from '../data/site';
 import '../styles/site.css';
 
 interface Props {
@@ -20,6 +20,8 @@ interface Props {
   // Root-relative path of the image for link previews.
   image?: string;
   card?: 'summary' | 'summary_large_image';
+  // false for a page that exists once for all languages: no hreflang links, no language link.
+  alternate?: boolean;
 }
 
 const {
@@ -31,10 +33,23 @@ const {
   nav = true,
   image = `/images/screenshots/${lang}/iphone-01-photos.jpg`,
   card = 'summary_large_image',
+  alternate = true,
 } = Astro.props;
 
 const canonical = path ? new URL(path, Astro.site).href : undefined;
 const socialImage = new URL(image, Astro.site).href;
+
+// The page in every language, for search engines; x-default is the English one.
+const alternates =
+  alternate && path
+    ? langs.map((other) => ({ lang: other, href: new URL(translatedPath(path, lang, other), Astro.site).href }))
+    : [];
+// The link to the same page in the other language, for the header and the footer.
+const { otherLanguage } = content[lang];
+const language =
+  alternate && path
+    ? { ...otherLanguage, href: translatedPath(path, lang, otherLanguage.lang) }
+    : undefined;
 
 // PNG on purpose: getImage would produce WebP by default.
 const favicon = await getImage({ src: appIcon, width: 64, height: 64, format: 'png' });
@@ -53,9 +68,12 @@ const table = await getImage({ src: wood, width: 1600, format: 'webp', quality: 
     <meta name="author" content={app.author} />
     {noindex && <meta name="robots" content="noindex" />}
     {canonical && <link rel="canonical" href={canonical} />}
+    {alternates.map((entry) => <link rel="alternate" hreflang={entry.lang} href={entry.href} />)}
+    {alternates.length > 0 && <link rel="alternate" hreflang="x-default" href={alternates[0].href} />}
     <link rel="icon" type="image/png" href={favicon.src} />
     <link rel="apple-touch-icon" href={touchIcon.src} />
     <meta property="og:site_name" content={app.name} />
+    <meta property="og:locale" content={locales[lang]} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     {canonical && <meta property="og:url" content={canonical} />}
@@ -68,10 +86,10 @@ const table = await getImage({ src: wood, width: 1600, format: 'webp', quality: 
     <slot name="head" />
   </head>
   <body style={`--wood-image: url(${table.src})`}>
-    <Header lang={lang} path={path} nav={nav} />
+    <Header lang={lang} path={path} nav={nav} language={language} />
     <main class="site-main">
       <slot />
     </main>
-    <Footer lang={lang} path={path} nav={nav} />
+    <Footer lang={lang} nav={nav} language={language} />
   </body>
 </html>

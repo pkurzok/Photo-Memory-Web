@@ -534,35 +534,35 @@ each other for visitors and for search engines.
 **Tasks**:
 - [x] Copy `Screenshots/screenshots/de-DE/*.jpg` from `../Photo-Memory-iOS` to
   `src/assets/images/screenshots/de/` with the lower-case names of Phase 1.
-- [ ] Write `src/data/de.ts`, typed as `Content`. Take the texts verbatim from the current
+- [x] Write `src/data/de.ts`, typed as `Content`. Take the texts verbatim from the current
   `de/index.html` (`git show main:de/index.html`); name "Photo Memo+: Fotos & Paare"; hero title
   "Keine Tiere von der Stange. Deine Familie."; captions from the `de-DE` headlines in
   `EasyFrame.json`; German alt texts for the eleven photos; footer links Datenschutzerklärung
   (`/de/privacy/`), Impressum, Weitere Apps. The word "Memory" appears nowhere.
-- [ ] In `src/data/site.ts` widen `Lang` to `'en' | 'de'`, add `'de'` to `langs`, register
+- [x] In `src/data/site.ts` widen `Lang` to `'en' | 'de'`, add `'de'` to `langs`, register
   `de.ts` in `content`, extend `pages` to `['/', '/de/', '/privacy/', '/de/privacy/']`, and add
   `src/pages/de/index.astro` rendering `<Home lang="de" />`.
-- [ ] Add `src/pages/de/privacy.md` from `privacy-policy-de.md` in the app repository, with the
+- [x] Add `src/pages/de/privacy.md` from `privacy-policy-de.md` in the app repository, with the
   same frontmatter (`lang: de`, `title` "Datenschutzerklärung") and the same three edits as the
   English policy (imprint link, "§ 5 DDG", the "Stand" date).
-- [ ] `Base.astro`: add the prop `alternate` (default true). When set, emit
+- [x] `Base.astro`: add the prop `alternate` (default true). When set, emit
   `<link rel="alternate" hreflang="en|de|x-default">` for the page's path in both languages
   (`x-default` is the English one), and `og:locale` `en_GB` or `de_DE`.
-- [ ] `Header.astro` and `Footer.astro`: the language link from `otherLanguage`, pointing to the
+- [x] `Header.astro` and `Footer.astro`: the language link from `otherLanguage`, pointing to the
   same page in the other language, with `lang` and `hreflang` attributes. Section links and the
   brand link go through `localePath`.
-- [ ] `check-dist.mjs`: `dist/de/index.html` and `dist/de/privacy/index.html` exist and have
+- [x] `check-dist.mjs`: `dist/de/index.html` and `dist/de/privacy/index.html` exist and have
   `<html lang="de">`; the German policy has its title and links to the shared imprint; the `de`
   screenshot folder is complete; every page with hreflang links names both languages and each
   target exists; `dist/de/index.html` links to `/de/…` for every local page link.
-- [ ] `README.md`: section "Two languages": where the texts are, the rule about the word "Memory"
+- [x] `README.md`: section "Two languages": where the texts are, the rule about the word "Memory"
   and why (Ravensburger trademark in Germany), and that a new text needs both files.
 
 **Automated Verification**:
-- [ ] `npm run build` reports 0 errors: a key missing in `de.ts` fails the type check.
-- [ ] `npm run check` prints no `✗` line, including "no HTML file contains "Memory"" and the
+- [x] `npm run build` reports 0 errors: a key missing in `de.ts` fails the type check.
+- [x] `npm run check` prints no `✗` line, including "no HTML file contains "Memory"" and the
   hreflang check.
-- [ ] `grep -o 'screenshots/de/' dist/de/index.html | wc -l` is at least 15 and
+- [x] `grep -o 'screenshots/de/' dist/de/index.html | wc -l` is at least 15 and
   `grep -o 'screenshots/en/' dist/de/index.html | wc -l` is 0.
 
 **Manual Verification**:
@@ -697,6 +697,13 @@ During implementation, document user feedback, problems, and decisions here.
   homepage; on the policy they lie on the paper.
 - Phase 1: Astro 7.3.8 prints a deprecation notice for `markdown.smartypants` on every build. The
   option still works and is kept as in the sibling site.
+- Phase 2: the German texts are taken verbatim from the old page, as planned. Two of them are
+  out of date since picture sets can be shared and contradict the German policy: the feature
+  "Deine Fotos bleiben auf dem Gerät" ("Nichts wird hochgeladen. Es gibt kein Konto und keinen
+  Server.") and the answer to "Verlassen meine Fotos mein iPhone?" ("Nein. … niemals
+  hochgeladen."). The English page already has the corrected wording. Owner's decision pending.
+- Phase 2: "one-time" and "Recommended" were English on the old German page; they are now
+  "einmalig" and "Empfohlen". The badge alt text is "Im App Store laden", as on the old `/s/`.
 - Phase 1: the "one-time" label is shown for the Pro tier only; the old page also printed it under
   the price "Free".
 

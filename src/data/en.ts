@@ -14,7 +14,7 @@ export const en: Content = {
   ],
   navCta: 'Get',
   navToggle: 'Toggle navigation',
-  otherLanguage: { label: 'Deutsch', lang: 'en' },
+  otherLanguage: { label: 'Deutsch', lang: 'de' },
   hero: {
     title: 'Not stock animals. Your family.',
     subtitle:
