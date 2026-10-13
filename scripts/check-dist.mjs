@@ -27,10 +27,12 @@ const screenshotNames = devices
 // Each language has its policy; `title` is the heading the page must carry.
 const policies = {
   en: { file: 'privacy/index.html', title: 'Privacy Policy' },
+  de: { file: 'de/privacy/index.html', title: 'Datenschutzerklärung' },
 };
+const homeOf = (lang) => (lang === 'en' ? 'index.html' : `${lang}/index.html`);
 
 const expectedFiles = [
-  'index.html',
+  ...langs.map(homeOf),
   ...langs.map((lang) => policies[lang].file),
   'images/app-icon.png',
   ...badges.map((file) => `images/${file}`),
@@ -145,28 +147,66 @@ check(
   files[sizes.indexOf(largest)],
 );
 
-// Homepage
-const index = html.get('index.html') ?? '';
-check(count(index, /<button[^>]*class="card[ "]/g) === 12, 'index.html holds 12 cards', 'the board is incomplete');
-check(
-  count(index, /<button[^>]*class="card[ "][^>]*disabled/g) === 12 && count(index, /class="card is-up/g) === 4,
-  'index.html shows a dealt board without the script: 12 inactive cards, two pairs face up',
-  'the picture of the round differs',
-);
-check(
-  count(index, /class="screenshot-trigger"/g) === screenshotNames.length,
-  `index.html holds ${screenshotNames.length} screenshot buttons`,
-  `found ${count(index, /class="screenshot-trigger"/g)}`,
-);
-check(
-  badges.every((file) => index.includes(`/images/${file}`)),
-  'index.html shows the download badge',
-  'app-store-download-{black,white}.svg not referenced',
-);
-check(index.includes('<meta name="apple-itunes-app" content="app-id='), 'index.html has the Smart App Banner tag', 'missing');
-for (const id of ['hero', 'highlights', 'screenshots', 'features', 'pricing', 'faq', 'download']) {
-  check(index.includes(`id="${id}"`), `index.html has id "${id}"`, 'missing');
+// Homepage, once per language
+for (const lang of langs) {
+  const file = homeOf(lang);
+  const page = html.get(file) ?? '';
+  check(page.includes(`<html lang="${lang}">`), `${file} is marked as "${lang}"`, 'the lang attribute differs');
+  check(count(page, /<button[^>]*class="card[ "]/g) === 12, `${file} holds 12 cards`, 'the board is incomplete');
+  check(
+    count(page, /<button[^>]*class="card[ "][^>]*disabled/g) === 12 && count(page, /class="card is-up/g) === 4,
+    `${file} shows a dealt board without the script: 12 inactive cards, two pairs face up`,
+    'the picture of the round differs',
+  );
+  const own = count(page, new RegExp(`data-full="/images/screenshots/${lang}/`, 'g'));
+  const all = count(page, /class="screenshot-trigger"/g);
+  check(
+    own === screenshotNames.length && all === own,
+    `${file} holds ${screenshotNames.length} screenshot buttons, all of its own language`,
+    `found ${all}, ${own} of them "${lang}"`,
+  );
+  check(
+    badges.every((badge) => page.includes(`/images/${badge}`)),
+    `${file} shows the download badge`,
+    'app-store-download-{black,white}.svg not referenced',
+  );
+  check(page.includes('<meta name="apple-itunes-app" content="app-id='), `${file} has the Smart App Banner tag`, 'missing');
+  const ids = ['hero', 'highlights', 'screenshots', 'features', 'pricing', 'faq', 'download'];
+  const absent = ids.filter((id) => !page.includes(`id="${id}"`));
+  check(absent.length === 0, `${file} has its ${ids.length} sections`, `missing: ${absent.join(', ')}`);
+
+  // Every link to a page of the site stays in the language; the language link is the exception.
+  if (lang !== 'en') {
+    const strays = [...page.matchAll(/<a\s[^>]*>/g)]
+      .map(([tag]) => tag)
+      .filter((tag) => !tag.includes('hreflang='))
+      .map((tag) => tag.match(/href="(\/[^"]*)"/)?.[1])
+      .filter((href) => href && !href.startsWith(`/${lang}/`));
+    check(strays.length === 0, `${file} links to /${lang}/… for every page of the site`, `found ${strays.join(', ')}`);
+  }
 }
+
+// hreflang: a page that names its translations names every language, and each target exists
+const site = 'https://photo-memo.peterkurzok.de';
+const paired = [];
+for (const [file, content] of html) {
+  const alternates = [...content.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)"/g)];
+  if (alternates.length === 0) continue;
+  const named = alternates.map(([, lang]) => lang);
+  const wanted = [...langs, 'x-default'];
+  const broken = alternates
+    .map(([, , href]) => href)
+    .filter((href) => !href.startsWith(site) || !files.includes(pageFor(href.slice(site.length))));
+  const ok = wanted.every((lang) => named.includes(lang)) && named.length === wanted.length && broken.length === 0;
+  if (ok) paired.push(`/${file.replace(/index\.html$/, '')}`);
+  else fail(`${file}: hreflang links name ${named.join(', ')}${broken.length ? `; no page at ${broken.join(', ')}` : ''}`);
+}
+const expectedPaired = ['/', '/de/', '/privacy/', '/de/privacy/'];
+check(
+  paired.sort().join() === [...expectedPaired].sort().join(),
+  'hreflang links pair / with /de/ and /privacy/ with /de/privacy/',
+  `pages with hreflang links: ${paired.join(', ') || 'none'}`,
+);
 
 // Privacy policy and imprint
 for (const lang of langs) {

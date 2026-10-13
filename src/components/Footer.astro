@@ -3,13 +3,13 @@ import { content, type Lang } from '../data/site';
 
 interface Props {
   lang: Lang;
-  // The page's own path; see Base.
-  path?: string;
   // false leaves out the tagline: the shared-set page speaks two languages.
   nav?: boolean;
+  // The same page in the other language, when there is one.
+  language?: { label: string; lang: Lang; href: string };
 }
 
-const { lang, nav = true } = Astro.props;
+const { lang, nav = true, language } = Astro.props;
 const { footer } = content[lang];
 ---
 
@@ -23,6 +23,13 @@ const { footer } = content[lang];
             {entry.label}
           </a>
         ))
+      }
+      {
+        language && (
+          <a href={language.href} class="footer-link" lang={language.lang} hreflang={language.lang}>
+            {language.label}
+          </a>
+        )
       }
     </div>
     <p class="footer-copyright">{footer.copyright}</p>

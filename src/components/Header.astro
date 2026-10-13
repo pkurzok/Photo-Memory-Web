@@ -9,9 +9,11 @@ interface Props {
   path?: string;
   // false leaves only the brand: the shared-set page has no navigation.
   nav?: boolean;
+  // The same page in the other language, when there is one.
+  language?: { label: string; lang: Lang; href: string };
 }
 
-const { lang, nav: showNav = true } = Astro.props;
+const { lang, nav: showNav = true, language } = Astro.props;
 const { nav, navCta, navToggle, shortName } = content[lang];
 
 // Section anchors only exist on the homepage; everywhere else they lead back to it.
@@ -56,6 +58,13 @@ const resolve = (href: string) => (href.startsWith('#') && !onHomepage ? home + 
                   </a>
                 </li>
               ))}
+              {language && (
+                <li>
+                  <a href={language.href} class="nav-link" lang={language.lang} hreflang={language.lang}>
+                    {language.label}
+                  </a>
+                </li>
+              )}
               <li>
                 <a href={app.appStoreUrl} class="button button-small">
                   {navCta}

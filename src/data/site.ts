@@ -1,5 +1,6 @@
 // Facts and helpers that do not depend on the language. The texts of a language are in
-// en.ts; the privacy policy is Markdown in src/pages/.
+// en.ts and de.ts; the privacy policies are Markdown in src/pages/.
+import { de } from './de';
 import { en } from './en';
 
 export const app = {
@@ -11,8 +12,8 @@ export const app = {
   appStoreUrl: 'https://apps.apple.com/app/id1607756335',
 };
 
-export type Lang = 'en';
-export const langs: Lang[] = ['en'];
+export type Lang = 'en' | 'de';
+export const langs: Lang[] = ['en', 'de'];
 
 // The screenshot files are src/assets/images/screenshots/<lang>/<device>-0<n>-<motif>.jpg,
 // with n counting the motifs from 1.
@@ -73,10 +74,17 @@ export type Content = {
   notFound: { title: string; text: string; home: string };
 };
 
-export const content: Record<Lang, Content> = { en };
+export const content: Record<Lang, Content> = { en, de };
 
 // The address of a page in a language: English at the root, every other language in its folder.
 export const localePath = (lang: Lang, path: string) => (lang === 'en' ? path : `/${lang}${path}`);
 
+// The same page in another language: "/de/privacy/" read as German becomes "/privacy/" in English.
+export const translatedPath = (path: string, from: Lang, to: Lang) =>
+  localePath(to, from === 'en' ? path : path.slice(from.length + 1));
+
+// What og:locale prints.
+export const locales: Record<Lang, string> = { en: 'en_GB', de: 'de_DE' };
+
 // The paths the sitemap lists.
-export const pages = ['/', '/privacy/'];
+export const pages = ['/', '/de/', '/privacy/', '/de/privacy/'];
