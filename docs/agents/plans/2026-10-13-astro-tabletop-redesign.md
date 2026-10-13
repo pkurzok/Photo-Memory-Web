@@ -628,7 +628,7 @@ app repository describes the new workflow. Steps marked (owner) happen in the Cl
 dashboard and are done by the owner; everything else is done by the implementer.
 
 **Tasks**:
-- [ ] Push the branch `astro` and the tag `ignite-final`; open a pull request to `main`. Do not
+- [x] Push the branch `astro` and the tag `ignite-final`; open a pull request to `main`. Do not
   merge yet.
 - [ ] (owner) Create the Cloudflare Pages project `photo-memory-web` from the GitHub repository:
   production branch `astro` for now, build command `npm run build`, output directory `dist`,
@@ -645,33 +645,33 @@ dashboard and are done by the owner; everything else is done by the implementer.
   build over the Astro source on `main`.
 - [ ] Merge the pull request. The push to `main` is the production deployment; run the live check
   again when it has finished.
-- [ ] In the app repository, in a worktree `../Photo-Memory-iOS-worktrees/astro-website` on a new
+- [x] In the app repository, in a worktree `../Photo-Memory-iOS-worktrees/astro-website` on a new
   branch `docs/astro-website` from `develop` (its default branch):
-  - [ ] Add `scripts/site-assets.sh`: takes the site folder, fails with a message naming the
+  - [x] Add `scripts/site-assets.sh`: takes the site folder, fails with a message naming the
     missing file when a source is absent (run `make screenshots` first), and copies the files of
     the Phase 1 list for `en-US` → `en` and `de-DE` → `de`. The screenshot folder defaults to
     `Screenshots/screenshots` and can be set with `SCREENSHOTS_DIR`, because the generated
     images are gitignored and exist only in the checkout that ran `make screenshots`.
-  - [ ] Add the Makefile target `site-assets` (`SITE` required, `SCREENSHOTS_DIR` optional) and
+  - [x] Add the Makefile target `site-assets` (`SITE` required, `SCREENSHOTS_DIR` optional) and
     list it in the help text.
-  - [ ] Rewrite `docs/website.md`: the site is the Astro project in `Photo-Memory-Web` on
+  - [x] Rewrite `docs/website.md`: the site is the Astro project in `Photo-Memory-Web` on
     Cloudflare Pages and that repository's README is the reference; where the copy comes from
     (`docs/aso/metadata/en-GB.md` and `de-DE.md`, unchanged rule about the word "Memory"); the
     freemium copy rules; `make site-assets`; the store URL table; "No fabricated social proof";
     the two open items about the app. Remove the Kickstart authoring, export, per-export fixes,
     hand-written files and Jekyll rollback sections. State that the framed store images are now
     used and why the old objection no longer holds.
-  - [ ] Delete `docs/website/privacy-policy-en.md` and `privacy-policy-de.md`; `docs/website.md`
+  - [x] Delete `docs/website/privacy-policy-en.md` and `privacy-policy-de.md`; `docs/website.md`
     names `src/pages/privacy.md` and `src/pages/de/privacy.md` in the site repository as the
     source, and so does the sentence in `docs/release-freemium.md` (section "Publish the
     privacy-policy section") that still points at the deleted files.
-  - [ ] Open a pull request in the app repository.
+  - [x] Open a pull request in the app repository.
 
 **Automated Verification**:
 - [ ] `npm run check:live -- https://photo-memo.peterkurzok.de` prints no `✗` line.
 - [ ] `gh api repos/pkurzok/Photo-Memory-Web/pages` answers 404.
 - [ ] `dig +short photo-memo.peterkurzok.de` no longer returns `pkurzok.github.io.`.
-- [ ] In the app repository's new worktree:
+- [x] In the app repository's new worktree:
   `make site-assets SITE=/Users/peter.kurzok/ws-privat/Photo-Memory-Web SCREENSHOTS_DIR=/Users/peter.kurzok/ws-privat/Photo-Memory-iOS/Screenshots/screenshots`
   followed by `git -C /Users/peter.kurzok/ws-privat/Photo-Memory-Web status --short src/assets`
   prints nothing.
@@ -709,6 +709,12 @@ During implementation, document user feedback, problems, and decisions here.
 - Phase 3: `check:live` also compares the page titles and expects the 404 page's text. Against
   `npm run preview` it reports 11 failures, all of them things only Cloudflare Pages does
   (`_headers`, `_redirects`, 308 for the form without trailing slash).
+- Phase 4: pull requests pkurzok/Photo-Memory-Web#4 (`astro` → `main`, not to be merged before
+  GitHub Pages is off) and pkurzok/Photo-Memory-iOS#101 (`docs/astro-website` → `develop`). The
+  app repository has no help target; `site-assets` is listed in the target overview of
+  `docs/screenshots.md` and documented in `docs/website.md`.
+- Phase 4: waiting for the owner to create the Cloudflare Pages project. Everything from
+  "Run `npm run check:live -- https://photo-memory-web.pages.dev`" on is open.
 - Phase 1: the "one-time" label is shown for the Pro tier only; the old page also printed it under
   the price "Free".
 
