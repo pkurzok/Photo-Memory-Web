@@ -634,10 +634,10 @@ dashboard and are done by the owner; everything else is done by the implementer.
   production branch `astro` for now, build command `npm run build`, output directory `dist`,
   environment variable `NODE_VERSION` = `22` for production and preview.
 - [x] Run `npm run check:live -- https://photo-memory-web.pages.dev` and fix what it reports.
-- [ ] (owner) Attach the custom domain `photo-memo.peterkurzok.de` to the project; this replaces
+- [x] (owner) Attach the custom domain `photo-memo.peterkurzok.de` to the project; this replaces
   the DNS record that points to `pkurzok.github.io`. GitHub Pages stays enabled, so pointing the
   record back restores the old site.
-- [ ] Run `npm run check:live -- https://photo-memo.peterkurzok.de`.
+- [x] Run `npm run check:live -- https://photo-memo.peterkurzok.de`.
 - [ ] (owner) Set the project's production branch to `main`. This deploys nothing by itself; the
   deployment of `astro` stays live.
 - [ ] Switch GitHub Pages off: `gh api -X DELETE repos/pkurzok/Photo-Memory-Web/pages`. It has to
@@ -670,7 +670,7 @@ dashboard and are done by the owner; everything else is done by the implementer.
 **Automated Verification**:
 - [ ] `npm run check:live -- https://photo-memo.peterkurzok.de` prints no `✗` line.
 - [ ] `gh api repos/pkurzok/Photo-Memory-Web/pages` answers 404.
-- [ ] `dig +short photo-memo.peterkurzok.de` no longer returns `pkurzok.github.io.`.
+- [x] `dig +short photo-memo.peterkurzok.de` no longer returns `pkurzok.github.io.`.
 - [x] In the app repository's new worktree:
   `make site-assets SITE=/Users/peter.kurzok/ws-privat/Photo-Memory-Web SCREENSHOTS_DIR=/Users/peter.kurzok/ws-privat/Photo-Memory-iOS/Screenshots/screenshots`
   followed by `git -C /Users/peter.kurzok/ws-privat/Photo-Memory-Web status --short src/assets`
