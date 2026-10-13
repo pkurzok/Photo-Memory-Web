@@ -1,0 +1,14 @@
+---
+import { app } from '../data/site';
+
+interface Props {
+  alt: string;
+}
+
+const { alt } = Astro.props;
+---
+
+<a href={app.appStoreUrl} class="store-badge-link">
+  <img src="/images/app-store-download-black.svg" alt={alt} class="store-badge store-badge-light-mode" />
+  <img src="/images/app-store-download-white.svg" alt={alt} class="store-badge store-badge-dark-mode" />
+</a>

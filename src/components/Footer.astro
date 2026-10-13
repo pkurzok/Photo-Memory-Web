@@ -1,0 +1,30 @@
+---
+import { content, type Lang } from '../data/site';
+
+interface Props {
+  lang: Lang;
+  // The page's own path; see Base.
+  path?: string;
+  // false leaves out the tagline: the shared-set page speaks two languages.
+  nav?: boolean;
+}
+
+const { lang, nav = true } = Astro.props;
+const { footer } = content[lang];
+---
+
+<footer class="site-footer">
+  <div class="container">
+    {nav && <p class="footer-tagline">{footer.tagline}</p>}
+    <div class="footer-links">
+      {
+        footer.links.map((entry) => (
+          <a href={entry.href} class="footer-link">
+            {entry.label}
+          </a>
+        ))
+      }
+    </div>
+    <p class="footer-copyright">{footer.copyright}</p>
+  </div>
+</footer>

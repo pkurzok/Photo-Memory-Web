@@ -1,0 +1,29 @@
+---
+import { content, type Lang } from '../data/site';
+import Board from './Board.astro';
+import StoreBadge from './StoreBadge.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const { hero } = content[lang];
+// Each sentence of the title starts on its own line.
+const sentences = hero.title.split(/(?<=\.)\s+/);
+---
+
+<section id="hero" class="hero on-wood">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <h1 class="hero-title">
+          {sentences.map((sentence) => <><span>{sentence}</span>{' '}</>)}
+        </h1>
+        <p class="hero-subtitle">{hero.subtitle}</p>
+        <StoreBadge alt={hero.badgeAlt} />
+      </div>
+      <Board lang={lang} />
+    </div>
+  </div>
+</section>

@@ -1,0 +1,24 @@
+{
+  "name": "photo-memory-web",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "test": "node --test \"src/lib/*.test.ts\"",
+    "check": "npm test && npm run build && node scripts/check-dist.mjs",
+    "check:live": "node scripts/check-live.mjs"
+  },
+  "dependencies": {
+    "astro": "^7.3.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@types/node": "^22.20.5",
+    "typescript": "^6.0.3"
+  }
+}

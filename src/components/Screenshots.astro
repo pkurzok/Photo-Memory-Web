@@ -1,0 +1,136 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import { content, devices, motifs, screenshotFile, type Lang } from '../data/site';
+import Icon from './Icon.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const { screenshots } = content[lang];
+
+const images = import.meta.glob<{ default: ImageMetadata }>('../assets/images/screenshots/*/*.jpg', {
+  eager: true,
+});
+
+// The iPad images are wider at the same height, so their thumbnails need more pixels.
+const thumbnailWidth = { iphone: 600, duo: 600, ipad: 800 };
+
+const panels = devices.map((device) => ({
+  device,
+  label: screenshots.deviceLabels[device],
+  shots: motifs.map((motif) => {
+    const file = `${lang}/${screenshotFile(device, motif)}`;
+    const image = images[`../assets/images/screenshots/${file}`];
+    if (!image) throw new Error(`Screenshot ${file} is missing in src/assets/images/screenshots/`);
+    return { file, alt: screenshots.captions[motif], image: image.default };
+  }),
+}));
+---
+
+<section id="screenshots" class="section section-alternate">
+  <div class="container">
+    <div class="section-header">
+      <h2>{screenshots.title}</h2>
+      <p class="section-description">{screenshots.description}</p>
+    </div>
+    <div class="device-tabs" role="tablist" aria-label={screenshots.title}>
+      {
+        panels.map((panel, index) => (
+          <button
+            type="button"
+            role="tab"
+            class="device-tab"
+            id={`tab-${panel.device}`}
+            aria-controls={`panel-${panel.device}`}
+            aria-selected={index === 0 ? 'true' : 'false'}
+            tabindex={index === 0 ? 0 : -1}
+          >
+            {panel.label}
+          </button>
+        ))
+      }
+    </div>
+    <div class="screenshots-container">
+      <button type="button" class="carousel-arrow carousel-prev" aria-label={screenshots.previous}>
+        <Icon name="chevron-left" />
+      </button>
+      {
+        panels.map((panel, index) => (
+          // Only the first panel is shown until the script switches tabs.
+          <div
+            class="screenshots-scroll"
+            role="tabpanel"
+            id={`panel-${panel.device}`}
+            aria-labelledby={`tab-${panel.device}`}
+            hidden={index !== 0}
+          >
+            {panel.shots.map((shot) => (
+              <div class="screenshot-card">
+                {/* The thumbnail is a small variant; the lightbox loads the original. */}
+                <button
+                  type="button"
+                  class="screenshot-trigger"
+                  data-full={`/images/screenshots/${shot.file}`}
+                  data-alt={shot.alt}
+                >
+                  <Image
+                    src={shot.image}
+                    width={thumbnailWidth[panel.device]}
+                    alt={shot.alt}
+                    loading="lazy"
+                    class="screenshot-image"
+                  />
+                </button>
+              </div>
+            ))}
+          </div>
+        ))
+      }
+      <button type="button" class="carousel-arrow carousel-next" aria-label={screenshots.next}>
+        <Icon name="chevron-right" />
+      </button>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const section = document.getElementById('screenshots');
+    const tabs = [...section.querySelectorAll('[role="tab"]')];
+    const panelOf = (tab) => document.getElementById(tab.getAttribute('aria-controls'));
+
+    const select = (tab) => {
+      for (const other of tabs) {
+        const selected = other === tab;
+        other.setAttribute('aria-selected', String(selected));
+        other.tabIndex = selected ? 0 : -1;
+        panelOf(other).hidden = !selected;
+      }
+    };
+
+    for (const tab of tabs) {
+      tab.addEventListener('click', () => select(tab));
+      tab.addEventListener('keydown', (event) => {
+        const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
+        if (!step) return;
+        event.preventDefault();
+        const next = tabs[(tabs.indexOf(tab) + step + tabs.length) % tabs.length];
+        select(next);
+        next.focus();
+      });
+    }
+
+    // The arrows scroll the panel that is shown, by one card and the gap after it.
+    const scroll = (direction) => {
+      const scroller = section.querySelector('[role="tabpanel"]:not([hidden])');
+      const gap = parseFloat(getComputedStyle(scroller).columnGap) || 0;
+      const step = scroller.querySelector('.screenshot-card').offsetWidth + gap;
+      scroller.scrollBy({ left: direction * step, behavior: 'smooth' });
+    };
+    section.querySelector('.carousel-prev').addEventListener('click', () => scroll(-1));
+    section.querySelector('.carousel-next').addEventListener('click', () => scroll(1));
+  })();
+</script>

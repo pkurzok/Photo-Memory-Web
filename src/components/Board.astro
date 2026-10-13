@@ -1,0 +1,158 @@
+---
+// The pairs board of the hero. The server renders a round in play, so the page shows a board
+// without JavaScript; the script below then deals a fresh round and makes it playable.
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import cardBackDark from '../assets/images/table/card-back-dark.png';
+import cardBack from '../assets/images/table/card-back.png';
+import { content, type Lang } from '../data/site';
+import StoreBadge from './StoreBadge.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const { board, hero } = content[lang];
+
+const images = import.meta.glob<{ default: ImageMetadata }>('../assets/images/photos/*.jpg', { eager: true });
+const photos = board.photos.map((alt, index) => {
+  const file = `${String(index + 1).padStart(2, '0')}.jpg`;
+  const image = images[`../assets/images/photos/${file}`];
+  if (!image) throw new Error(`Photo ${file} is missing in src/assets/images/photos/`);
+  return { alt, image: image.default };
+});
+
+// The pair of every card in the picture of a round, and the two pairs already found in it.
+const dealt = [0, 2, 3, 0, 4, 1, 1, 5, 2, 5, 3, 4];
+const found = [0, 1];
+const faceDown = (position: number) => board.faceDown.replace('{n}', String(position));
+---
+
+<div class="board-area">
+  <div
+    class="board"
+    role="group"
+    aria-label={board.label}
+    data-face-down={board.faceDown}
+    data-won={board.won}
+  >
+    {
+      dealt.map((pair, index) => {
+        const up = found.includes(pair);
+        return (
+          <button
+            type="button"
+            class:list={['card', { 'is-up': up, 'is-matched': up }]}
+            data-pair={pair}
+            data-alt={photos[pair].alt}
+            aria-label={up ? photos[pair].alt : faceDown(index + 1)}
+            disabled
+          >
+            <span class="card-inner">
+              <span class="card-face card-back">
+                <Image src={cardBack} width={320} alt="" class="card-back-light" loading="eager" />
+                <Image src={cardBackDark} width={320} alt="" class="card-back-dark" loading="eager" />
+              </span>
+              <span class="card-face card-front">
+                <Image src={photos[pair].image} width={320} alt="" loading="eager" />
+              </span>
+            </span>
+          </button>
+        );
+      })
+    }
+  </div>
+  <p class="board-status visually-hidden" aria-live="polite" hidden></p>
+  <div class="board-controls" hidden>
+    <p class="capsule">{board.moves}: <span data-moves>0</span></p>
+    <button type="button" class="capsule" data-deal>{board.deal}</button>
+  </div>
+  <div class="board-won" hidden>
+    <p class="board-won-title" data-won-title></p>
+    <p class="board-won-text">{board.wonCta}</p>
+    <div class="board-won-actions">
+      <StoreBadge alt={hero.badgeAlt} />
+      <button type="button" class="capsule" data-deal>{board.deal}</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { deal, flip, initial, isWon, settle, type State } from '../lib/pairs';
+
+  // How long a mismatched pair stays visible.
+  const settleDelay = 900;
+
+  const area = document.querySelector<HTMLElement>('.board-area');
+  const board = area?.querySelector<HTMLElement>('.board');
+  if (area && board) {
+    const status = area.querySelector<HTMLElement>('.board-status')!;
+    const controls = area.querySelector<HTMLElement>('.board-controls')!;
+    const won = area.querySelector<HTMLElement>('.board-won')!;
+    const wonTitle = area.querySelector<HTMLElement>('[data-won-title]')!;
+    const moves = area.querySelector<HTMLElement>('[data-moves]')!;
+    const texts = board.dataset as { faceDown: string; won: string };
+
+    let cards: HTMLButtonElement[] = [];
+    let state: State;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+
+    const render = () => {
+      cards.forEach((card, index) => {
+        const matched = state.matched.has(index);
+        const up = matched || state.faceUp.includes(index);
+        card.classList.toggle('is-up', up);
+        card.classList.toggle('is-matched', matched);
+        card.setAttribute('aria-label', up ? card.dataset.alt! : texts.faceDown.replace('{n}', String(index + 1)));
+      });
+      moves.textContent = String(state.moves);
+      const finished = isWon(state);
+      const message = finished ? texts.won.replace('{n}', String(state.moves)) : '';
+      status.textContent = message;
+      wonTitle.textContent = message;
+      controls.hidden = finished;
+      won.hidden = !finished;
+    };
+
+    const start = () => {
+      clearTimeout(timer);
+      const pending = [...board.querySelectorAll<HTMLButtonElement>('.card')];
+      state = initial(deal(pending.length / 2));
+      // Put the buttons in the order of the deal: for each place, the next unused card of its pair.
+      cards = state.cards.map((pair) => {
+        const at = pending.findIndex((card) => Number(card.dataset.pair) === pair);
+        return pending.splice(at, 1)[0];
+      });
+      board.append(...cards);
+      render();
+    };
+
+    board.addEventListener('click', (event) => {
+      const card = (event.target as Element).closest<HTMLButtonElement>('.card');
+      if (!card) return;
+      state = flip(state, cards.indexOf(card));
+      render();
+      if (state.locked) {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          state = settle(state);
+          render();
+        }, settleDelay);
+      }
+    });
+
+    for (const button of area.querySelectorAll<HTMLButtonElement>('[data-deal]')) {
+      button.addEventListener('click', () => {
+        const fromPanel = won.contains(button);
+        start();
+        // The panel and its button are gone; keep the focus on the board's own button.
+        if (fromPanel) controls.querySelector<HTMLButtonElement>('[data-deal]')?.focus();
+      });
+    }
+
+    start();
+    for (const card of cards) card.disabled = false;
+    status.hidden = false;
+  }
+</script>
