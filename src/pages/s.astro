@@ -1,0 +1,66 @@
+---
+// The page a shared picture-set link shows in a browser. The app opens such links itself
+// (universal links, public/.well-known/apple-app-site-association); this page is what everyone
+// else sees.
+import { Image } from 'astro:assets';
+import appIcon from '../assets/images/app-icon.png';
+import StoreBadge from '../components/StoreBadge.astro';
+import Base from '../layouts/Base.astro';
+---
+
+{/*
+  The Open Graph tags that Base renders must stay static: a crawler doesn't run JavaScript, and
+  Messages, WhatsApp and Slack build their link preview from them, so nothing in them may be
+  injected at runtime.
+  noindex: the page says nothing without the fragment, and a crawler never receives the fragment.
+  One page serves both languages, because the link is the same for every recipient.
+*/}
+<Base
+  title="A Photo Memo+ picture set"
+  description="Someone shared a set of photos to play the pairs game with. Open the link on an iPhone with Photo Memo+ installed."
+  path="/s/"
+  noindex
+  nav={false}
+  alternate={false}
+  image="/images/app-icon.png"
+  card="summary"
+>
+  <section id="hero" class="hero share-hero on-wood">
+    <div class="container">
+      <Image src={appIcon} width={240} height={240} alt="Photo Memo+ app icon" class="share-app-icon" loading="eager" />
+
+      <div class="share-lede" lang="en">
+        <h1 class="hero-title">Someone shared a picture set with you</h1>
+        <p class="hero-subtitle">
+          Open this link on your iPhone with Photo Memo+ installed, and the photos are dealt onto the board straight
+          away. Links work for seven days. The photos are encrypted on the sender's iPhone before they leave it, so
+          nobody in between — us included — can see them.
+        </p>
+        <StoreBadge alt="Download on the App Store" />
+      </div>
+
+      <div class="share-lede" lang="de">
+        <h2 class="hero-title">Jemand hat ein Bilderset mit dir geteilt</h2>
+        <p class="hero-subtitle">
+          Öffne diesen Link auf deinem iPhone, auf dem Photo Memo+ installiert ist — die Fotos landen sofort auf dem
+          Spielfeld. Links gelten sieben Tage. Die Fotos werden auf dem iPhone des Absenders verschlüsselt, bevor sie
+          es verlassen; niemand dazwischen kann sie sehen, wir eingeschlossen.
+        </p>
+        <StoreBadge alt="Im App Store laden" />
+      </div>
+    </div>
+  </section>
+
+  {/*
+    Base renders the Smart App Banner tag (apple-itunes-app). This script adds `app-argument`
+    with the whole URL, fragment included, so the banner's Open button hands the set to the
+    installed app. Without it, Open launches Photo Memo+ to an empty board and the set is lost.
+  */}
+  <script is:inline>
+    // The set is never shown here and can't be: its record id and key are in the URL fragment,
+    // which stays in the browser (RFC 3986 §3.5). The server sees a plain GET for /s/.
+    // The fragment is only needed for the Smart App Banner's Open button, set here in the browser.
+    document.querySelector('meta[name="apple-itunes-app"]')
+      .setAttribute('content', 'app-id=1607756335, app-argument=' + window.location.href);
+  </script>
+</Base>

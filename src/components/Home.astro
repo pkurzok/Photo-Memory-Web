@@ -1,0 +1,31 @@
+---
+// The homepage of one language; src/pages/index.astro and its siblings render it.
+import { content, localePath, type Lang } from '../data/site';
+import Base from '../layouts/Base.astro';
+import Download from './Download.astro';
+import Faq from './Faq.astro';
+import Features from './Features.astro';
+import Hero from './Hero.astro';
+import Highlights from './Highlights.astro';
+import Lightbox from './Lightbox.astro';
+import Pricing from './Pricing.astro';
+import Screenshots from './Screenshots.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const { name, description } = content[lang];
+---
+
+<Base lang={lang} title={name} description={description} path={localePath(lang, '/')}>
+  <Hero lang={lang} />
+  <Highlights lang={lang} />
+  <Screenshots lang={lang} />
+  <Features lang={lang} />
+  <Pricing lang={lang} />
+  <Faq lang={lang} />
+  <Download lang={lang} />
+  <Lightbox lang={lang} />
+</Base>

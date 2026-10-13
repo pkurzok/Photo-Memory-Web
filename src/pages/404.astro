@@ -1,0 +1,31 @@
+---
+// One page for every unknown address, so it speaks both languages.
+import { content, langs, localePath } from '../data/site';
+import Base from '../layouts/Base.astro';
+
+const { notFound, shortName } = content.en;
+---
+
+<Base title={`${notFound.title} - ${shortName}`} description={notFound.text} noindex alternate={false}>
+  <div class="prose-page">
+    <div class="container">
+      <div class="prose">
+        {
+          langs.map((lang, index) => {
+            const text = content[lang].notFound;
+            const Heading = index === 0 ? 'h1' : 'h2';
+            return (
+              <div class="prose-block" lang={lang}>
+                <Heading>{text.title}</Heading>
+                <p>{text.text}</p>
+                <a href={localePath(lang, '/')} class="button">
+                  {text.home}
+                </a>
+              </div>
+            );
+          })
+        }
+      </div>
+    </div>
+  </div>
+</Base>

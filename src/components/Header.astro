@@ -1,0 +1,100 @@
+---
+import { Image } from 'astro:assets';
+import appIcon from '../assets/images/app-icon.png';
+import { app, content, localePath, type Lang } from '../data/site';
+
+interface Props {
+  lang: Lang;
+  // The page's own path; see Base.
+  path?: string;
+  // false leaves only the brand: the shared-set page has no navigation.
+  nav?: boolean;
+  // The same page in the other language, when there is one.
+  language?: { label: string; lang: Lang; href: string };
+}
+
+const { lang, nav: showNav = true, language } = Astro.props;
+const { nav, navCta, navToggle, shortName } = content[lang];
+
+// Section anchors only exist on the homepage; everywhere else they lead back to it.
+const home = localePath(lang, '/');
+const onHomepage = Astro.props.path === home;
+const resolve = (href: string) => (href.startsWith('#') && !onHomepage ? home + href : href);
+---
+
+<header class="site-header">
+  <nav class="container" aria-label={shortName}>
+    <a href={home} class="capsule brand-link">
+      {/* Twice the size of its slot, for high-resolution screens. */}
+      <Image src={appIcon} width={56} height={56} alt="" class="brand-icon" loading="eager" />
+      <span>{shortName}</span>
+    </a>
+    {
+      showNav && (
+        <>
+          <button
+            type="button"
+            class="capsule nav-toggle"
+            aria-controls="site-nav"
+            aria-expanded="false"
+            aria-label={navToggle}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" aria-hidden="true">
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-miterlimit="10"
+                stroke-width="2.5"
+                d="M5 9h20M5 15h20M5 21h20"
+              />
+            </svg>
+          </button>
+          <div id="site-nav" class="nav-collapse">
+            <ul class="nav-list">
+              {nav.map((entry) => (
+                <li>
+                  <a href={resolve(entry.href)} class="nav-link">
+                    {entry.label}
+                  </a>
+                </li>
+              ))}
+              {language && (
+                <li>
+                  <a href={language.href} class="nav-link" lang={language.lang} hreflang={language.lang}>
+                    {language.label}
+                  </a>
+                </li>
+              )}
+              <li>
+                <a href={app.appStoreUrl} class="button button-small">
+                  {navCta}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </>
+      )
+    }
+  </nav>
+</header>
+
+<script is:inline>
+  (() => {
+    const toggle = document.querySelector('.nav-toggle');
+    // The shared-set page has no navigation and so no toggle.
+    if (!toggle) return;
+    const target = document.getElementById(toggle.getAttribute('aria-controls'));
+    const set = (open) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      target.toggleAttribute('data-open', open);
+    };
+    toggle.addEventListener('click', () => set(toggle.getAttribute('aria-expanded') !== 'true'));
+    // A section link scrolls the page; the open menu would cover the section.
+    target.addEventListener('click', (event) => {
+      if (event.target.closest('a')) set(false);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') set(false);
+    });
+  })();
+</script>

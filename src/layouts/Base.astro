@@ -1,0 +1,95 @@
+---
+import { getImage } from 'astro:assets';
+import appIcon from '../assets/images/app-icon.png';
+import wood from '../assets/images/table/wood-1.jpg';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { app, content, langs, locales, translatedPath, type Lang } from '../data/site';
+import '../styles/site.css';
+
+interface Props {
+  lang?: Lang;
+  title: string;
+  description: string;
+  // Path of the page with leading and trailing slash, e.g. "/privacy/". Without it the page
+  // gets neither a canonical link nor og:url (the 404 page has no address of its own).
+  path?: string;
+  noindex?: boolean;
+  // false removes the navigation and reduces the footer to its links.
+  nav?: boolean;
+  // Root-relative path of the image for link previews.
+  image?: string;
+  card?: 'summary' | 'summary_large_image';
+  // false for a page that exists once for all languages: no hreflang links, no language link.
+  alternate?: boolean;
+}
+
+const {
+  lang = 'en',
+  title,
+  description,
+  path,
+  noindex = false,
+  nav = true,
+  image = `/images/screenshots/${lang}/iphone-01-photos.jpg`,
+  card = 'summary_large_image',
+  alternate = true,
+} = Astro.props;
+
+const canonical = path ? new URL(path, Astro.site).href : undefined;
+const socialImage = new URL(image, Astro.site).href;
+
+// The page in every language, for search engines; x-default is the English one.
+const alternates =
+  alternate && path
+    ? langs.map((other) => ({ lang: other, href: new URL(translatedPath(path, lang, other), Astro.site).href }))
+    : [];
+// The link to the same page in the other language, for the header and the footer.
+const { otherLanguage } = content[lang];
+const language =
+  alternate && path
+    ? { ...otherLanguage, href: translatedPath(path, lang, otherLanguage.lang) }
+    : undefined;
+
+// PNG on purpose: getImage would produce WebP by default.
+const favicon = await getImage({ src: appIcon, width: 64, height: 64, format: 'png' });
+const touchIcon = await getImage({ src: appIcon, width: 180, height: 180, format: 'png' });
+// The table texture of the hero and the download band; site.css reads it as --wood-image.
+const table = await getImage({ src: wood, width: 1600, format: 'webp', quality: 55 });
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={app.author} />
+    {noindex && <meta name="robots" content="noindex" />}
+    {canonical && <link rel="canonical" href={canonical} />}
+    {alternates.map((entry) => <link rel="alternate" hreflang={entry.lang} href={entry.href} />)}
+    {alternates.length > 0 && <link rel="alternate" hreflang="x-default" href={alternates[0].href} />}
+    <link rel="icon" type="image/png" href={favicon.src} />
+    <link rel="apple-touch-icon" href={touchIcon.src} />
+    <meta property="og:site_name" content={app.name} />
+    <meta property="og:locale" content={locales[lang]} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content={card} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:domain" content={Astro.site?.hostname} />
+    <meta name="twitter:dnt" content="on" />
+    <meta name="apple-itunes-app" content={`app-id=${app.appStoreId}`} />
+    <slot name="head" />
+  </head>
+  <body style={`--wood-image: url(${table.src})`}>
+    <Header lang={lang} path={path} nav={nav} language={language} />
+    <main class="site-main">
+      <slot />
+    </main>
+    <Footer lang={lang} nav={nav} language={language} />
+  </body>
+</html>
