@@ -697,11 +697,13 @@ During implementation, document user feedback, problems, and decisions here.
   homepage; on the policy they lie on the paper.
 - Phase 1: Astro 7.3.8 prints a deprecation notice for `markdown.smartypants` on every build. The
   option still works and is kept as in the sibling site.
-- Phase 2: the German texts are taken verbatim from the old page, as planned. Two of them are
-  out of date since picture sets can be shared and contradict the German policy: the feature
-  "Deine Fotos bleiben auf dem Gerät" ("Nichts wird hochgeladen. Es gibt kein Konto und keinen
-  Server.") and the answer to "Verlassen meine Fotos mein iPhone?" ("Nein. … niemals
-  hochgeladen."). The English page already has the corrected wording. Owner's decision pending.
+- Phase 2: the German texts are taken verbatim from the old page, with two exceptions. The
+  feature "Deine Fotos bleiben auf dem Gerät" and the answer to "Verlassen meine Fotos mein
+  iPhone?" still said that nothing is ever uploaded. `docs/release-freemium.md` in the app
+  repository records that both were corrected on both Kickstart sites for 2.1.0 (picture
+  sharing); the German export in this repository was never refreshed. Both now carry a German
+  rendering of the corrected English wording. The owner should read the two sentences in
+  `src/data/de.ts` once.
 - Phase 2: "one-time" and "Recommended" were English on the old German page; they are now
   "einmalig" and "Empfohlen". The badge alt text is "Im App Store laden", as on the old `/s/`.
 - Phase 3: `check:live` also compares the page titles and expects the 404 page's text. Against
