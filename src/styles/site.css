@@ -1176,6 +1176,10 @@ button.capsule:hover {
     border-top: 1px solid var(--border);
 }
 
+.prose-block h2 {
+    margin-top: 0;
+}
+
 /* ==========================================
    Footer
    ========================================== */
@@ -1213,4 +1217,43 @@ button.capsule:hover {
 .footer-copyright {
     margin: 0;
     color: var(--ink-muted);
+}
+
+/* ==========================================
+   Shared-set page (/s/)
+   ========================================== */
+
+.share-hero {
+    min-height: 80vh;
+    text-align: center;
+}
+
+/* The icon PNG is already masked; clip to the same shape so the shadow follows it. */
+.share-app-icon {
+    width: 7.5rem;
+    height: 7.5rem;
+    margin: 0 auto 2rem;
+    border-radius: 22.5%;
+    box-shadow: var(--shadow-card);
+}
+
+.share-lede {
+    max-width: 34rem;
+    margin-inline: auto;
+}
+
+.share-lede + .share-lede {
+    margin-top: 2.5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid color-mix(in srgb, var(--wood-ink) 30%, transparent);
+}
+
+.share-lede .hero-title {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+}
+
+.share-lede .hero-subtitle {
+    max-width: none;
 }

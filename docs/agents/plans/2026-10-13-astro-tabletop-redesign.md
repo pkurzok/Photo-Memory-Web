@@ -577,45 +577,45 @@ Dependencies: Phase 2
 Every address of the URL contract exists in the build, and a script can verify a deployment.
 
 **Tasks**:
-- [ ] `src/pages/s.astro` from the sibling's, with the texts of the current `s/index.html`
+- [x] `src/pages/s.astro` from the sibling's, with the texts of the current `s/index.html`
   (`git show main:s/index.html`): title "A Photo Memo+ picture set", the description, both
   language blocks, `noindex`, `nav={false}`, `alternate={false}`, `image="/images/app-icon.png"`,
   `card="summary"`, and the inline script with `app-id=1607756335`.
-- [ ] `src/pages/404.astro`: `noindex`, no `path`, `alternate={false}`, an English and a German
+- [x] `src/pages/404.astro`: `noindex`, no `path`, `alternate={false}`, an English and a German
   block from `notFound` with a link to `/` and `/de/`.
-- [ ] Move both association files to `public/.well-known/apple-app-site-association` and
+- [x] Move both association files to `public/.well-known/apple-app-site-association` and
   `public/apple-app-site-association` with `git mv`, content untouched.
-- [ ] `public/_headers`: `Content-Type: application/json` for both association paths.
-- [ ] `public/_redirects`:
+- [x] `public/_headers`: `Content-Type: application/json` for both association paths.
+- [x] `public/_redirects`:
   ```
   /privacy.html /privacy/ 301
   /de/privacy.html /de/privacy/ 301
   /imprint.html https://apps.peterkurzok.de/imprint/ 301
   /de/imprint.html https://apps.peterkurzok.de/imprint/ 301
   ```
-- [ ] `public/robots.txt` with the sitemap line; `src/pages/sitemap.xml.ts` and
+- [x] `public/robots.txt` with the sitemap line; `src/pages/sitemap.xml.ts` and
   `src/pages/feed.rss.ts` from the sibling, both reading `pages` and `app.name` from `site.ts`.
-- [ ] `check-dist.mjs`: the expected files (`s/index.html`, `404.html`, `sitemap.xml`, `feed.rss`, `robots.txt`, `_headers`, `_redirects`,
+- [x] `check-dist.mjs`: the expected files (`s/index.html`, `404.html`, `sitemap.xml`, `feed.rss`, `robots.txt`, `_headers`, `_redirects`,
   both association files, `images/app-icon.png`); both association files in `dist/` equal each
   other and their copies in `public/`, byte for byte;
   `_headers` names both paths; `_redirects` holds exactly the four lines; the sitemap lists the
   four pages and not `/s/`; `s/index.html` has `noindex`, the four static `og:` tags, no
   navigation link and the `app-argument` script.
-- [ ] `scripts/check-live.mjs` from the sibling, testing every line of the URL contract against a
+- [x] `scripts/check-live.mjs` from the sibling, testing every line of the URL contract against a
   base URL: the 200 pages with content type, the two policy redirects and the two imprint
   redirects (301 with exact target), both association files as `application/json` with the bytes
   of `public/`, `/images/app-icon.png` and every file of `src/assets/images/` with identical
   bytes, the trailing-slash forms (`/privacy`, `/de`, `/de/privacy`, `/s` answer 308), and 404
   for `/imprint/`, `/de/feed.rss` and `/css/styles.css`, each asked with a `?fresh=<timestamp>`
   query.
-- [ ] `README.md`: complete it with the sections of the sibling's README that apply: editing the
+- [x] `README.md`: complete it with the sections of the sibling's README that apply: editing the
   privacy policy, shared picture sets and universal links (the association file is load-bearing
   and cached by Apple for up to 24 hours), images, deployment, rollback, URL contract table.
 
 **Automated Verification**:
-- [ ] `npm run check` prints no `✗` line.
-- [ ] `cmp public/.well-known/apple-app-site-association <(git show main:.well-known/apple-app-site-association)` reports no difference.
-- [ ] `npm run preview` in the background, then
+- [x] `npm run check` prints no `✗` line.
+- [x] `cmp public/.well-known/apple-app-site-association <(git show main:.well-known/apple-app-site-association)` reports no difference.
+- [x] `npm run preview` in the background, then
   `curl -s -o /dev/null -w '%{http_code}' http://localhost:4321<path>` answers 200 for `/`,
   `/de/`, `/privacy/`, `/de/privacy/`, `/s/`, `/sitemap.xml`, `/feed.rss`, `/robots.txt`.
 
@@ -704,6 +704,9 @@ During implementation, document user feedback, problems, and decisions here.
   hochgeladen."). The English page already has the corrected wording. Owner's decision pending.
 - Phase 2: "one-time" and "Recommended" were English on the old German page; they are now
   "einmalig" and "Empfohlen". The badge alt text is "Im App Store laden", as on the old `/s/`.
+- Phase 3: `check:live` also compares the page titles and expects the 404 page's text. Against
+  `npm run preview` it reports 11 failures, all of them things only Cloudflare Pages does
+  (`_headers`, `_redirects`, 308 for the form without trailing slash).
 - Phase 1: the "one-time" label is shown for the Pro tier only; the old page also printed it under
   the price "Free".
 
