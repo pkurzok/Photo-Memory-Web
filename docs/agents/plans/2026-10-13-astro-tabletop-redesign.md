@@ -630,10 +630,10 @@ dashboard and are done by the owner; everything else is done by the implementer.
 **Tasks**:
 - [x] Push the branch `astro` and the tag `ignite-final`; open a pull request to `main`. Do not
   merge yet.
-- [ ] (owner) Create the Cloudflare Pages project `photo-memory-web` from the GitHub repository:
+- [x] (owner) Create the Cloudflare Pages project `photo-memory-web` from the GitHub repository:
   production branch `astro` for now, build command `npm run build`, output directory `dist`,
   environment variable `NODE_VERSION` = `22` for production and preview.
-- [ ] Run `npm run check:live -- https://photo-memory-web.pages.dev` and fix what it reports.
+- [x] Run `npm run check:live -- https://photo-memory-web.pages.dev` and fix what it reports.
 - [ ] (owner) Attach the custom domain `photo-memo.peterkurzok.de` to the project; this replaces
   the DNS record that points to `pkurzok.github.io`. GitHub Pages stays enabled, so pointing the
   record back restores the old site.
