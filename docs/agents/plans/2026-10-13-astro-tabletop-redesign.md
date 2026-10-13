@@ -514,15 +514,15 @@ download band, footer.
 - [x] `git ls-files | grep -E '^(css|js|fonts|de)/|^index\.html$|^CNAME$'` prints nothing.
 
 **Manual Verification**:
-- [ ] `npm run dev`, open `http://localhost:4321/`: the page matches the mockup in light and dark
+- [x] `npm run dev`, open `http://localhost:4321/`: the page matches the mockup in light and dark
   appearance, at phone width (390 px) and desktop width; the text on the wood is easy to read in
   both.
-- [ ] Play a round with the mouse and one with the keyboard only (Tab, Enter): pairs stay up,
+- [x] Play a round with the mouse and one with the keyboard only (Tab, Enter): pairs stay up,
   mismatches turn back, the counter counts turns, the win panel appears, "Deal again" starts a
   new round.
-- [ ] With "Reduce motion" on, cards change without the flip. With JavaScript off, the board
+- [x] With "Reduce motion" on, cards change without the flip. With JavaScript off, the board
   shows a dealt position and the rest of the page works.
-- [ ] The three device tabs switch, the arrows scroll, and a tap opens the full image.
+- [x] The three device tabs switch, the arrows scroll, and a tap opens the full image.
 
 ### Phase 2: German home page at /de/
 
@@ -566,9 +566,9 @@ each other for visitors and for search engines.
   `grep -o 'screenshots/en/' dist/de/index.html | wc -l` is 0.
 
 **Manual Verification**:
-- [ ] `http://localhost:4321/de/`: all visible text is German, including board labels, tab names,
+- [x] `http://localhost:4321/de/`: all visible text is German, including board labels, tab names,
   lightbox heading and badge alt text; the screenshots carry German captions.
-- [ ] The language link in header and footer switches between `/` and `/de/` and back.
+- [x] The language link in header and footer switches between `/` and `/de/` and back.
 
 ### Phase 3: Shared-set page, 404 page and technical files
 
