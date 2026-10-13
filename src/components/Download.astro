@@ -1,0 +1,18 @@
+---
+import { content, type Lang } from '../data/site';
+import StoreBadge from './StoreBadge.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { download, hero } = content[Astro.props.lang];
+---
+
+<section id="download" class="download-section on-wood">
+  <div class="container">
+    <h2>{download.title}</h2>
+    <p class="download-text">{download.text}</p>
+    <StoreBadge alt={hero.badgeAlt} />
+  </div>
+</section>

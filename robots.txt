@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://photo-memo.peterkurzok.de/sitemap.xml

@@ -1,0 +1,33 @@
+---
+import { content, type Lang } from '../data/site';
+import Icon from './Icon.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { features } = content[Astro.props.lang];
+---
+
+<section id="features" class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>{features.title}</h2>
+    </div>
+    <div class="features-grid">
+      {
+        features.items.map((feature) => (
+          <div class="feature">
+            <div class="feature-icon">
+              <Icon name={feature.icon} />
+            </div>
+            <div>
+              <h3 class="feature-title">{feature.title}</h3>
+              <p class="feature-text">{feature.text}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

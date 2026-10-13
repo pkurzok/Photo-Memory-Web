@@ -1,0 +1,42 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import { content, type Lang } from '../data/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { highlights } = content[Astro.props.lang];
+
+// The board plays with photos 01 to 06; the tiles take the ones after them.
+const firstPhoto = 7;
+const images = import.meta.glob<{ default: ImageMetadata }>('../assets/images/photos/*.jpg', { eager: true });
+const items = highlights.items.map((item, index) => {
+  const file = `${String(firstPhoto + index).padStart(2, '0')}.jpg`;
+  const image = images[`../assets/images/photos/${file}`];
+  if (!image) throw new Error(`Photo ${file} is missing in src/assets/images/photos/`);
+  return { ...item, image: image.default };
+});
+---
+
+<section id="highlights" class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>{highlights.title}</h2>
+    </div>
+    <div class="highlights-grid">
+      {
+        items.map((item) => (
+          <div class="highlight">
+            <Image src={item.image} width={480} alt={item.photoAlt} class="highlight-photo" loading="lazy" />
+            <div>
+              <h3 class="highlight-title">{item.title}</h3>
+              <p class="highlight-text">{item.text}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
