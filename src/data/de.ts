@@ -129,7 +129,7 @@ export const de: Content = {
       {
         icon: 'shield-lock-fill',
         title: 'Deine Fotos bleiben auf dem Gerät',
-        text: 'Nichts wird hochgeladen. Es gibt kein Konto und keinen Server.',
+        text: 'Nichts wird hochgeladen, es sei denn, du teilst ein Bilderset — und das wird vorher auf deinem Gerät verschlüsselt.',
       },
     ],
   },
@@ -159,7 +159,7 @@ export const de: Content = {
       {
         question: 'Verlassen meine Fotos mein iPhone?',
         answer:
-          'Nein. Die Bilder, die du auswählst, werden in den eigenen Speicher der App auf dem Gerät kopiert und niemals hochgeladen. Es gibt kein Konto und keinen Server.',
+          'Nur, wenn du ein Bilderset teilst. Die Bilder, die du auswählst, werden in den eigenen Speicher der App auf dem Gerät kopiert und bleiben dort. Schickst du jemandem ein Set, wird es vorher auf deinem Gerät verschlüsselt, und der Schlüssel reist nur im Link — wir können es also nicht lesen. Diese Kopie wird nach 7 Tagen gelöscht. Sonst wird nie etwas hochgeladen, und es gibt kein Konto.',
       },
       {
         question: 'Funktioniert es ohne Internetverbindung?',
