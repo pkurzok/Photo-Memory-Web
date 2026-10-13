@@ -638,12 +638,12 @@ dashboard and are done by the owner; everything else is done by the implementer.
   the DNS record that points to `pkurzok.github.io`. GitHub Pages stays enabled, so pointing the
   record back restores the old site.
 - [x] Run `npm run check:live -- https://photo-memo.peterkurzok.de`.
-- [ ] (owner) Set the project's production branch to `main`. This deploys nothing by itself; the
+- [x] (owner) Set the project's production branch to `main`. This deploys nothing by itself; the
   deployment of `astro` stays live.
-- [ ] Switch GitHub Pages off: `gh api -X DELETE repos/pkurzok/Photo-Memory-Web/pages`. It has to
+- [x] Switch GitHub Pages off: `gh api -X DELETE repos/pkurzok/Photo-Memory-Web/pages`. It has to
   happen before the merge: with `.nojekyll` and `CNAME` gone, GitHub would otherwise run a Jekyll
   build over the Astro source on `main`.
-- [ ] Merge the pull request. The push to `main` is the production deployment; run the live check
+- [x] Merge the pull request. The push to `main` is the production deployment; run the live check
   again when it has finished.
 - [x] In the app repository, in a worktree `../Photo-Memory-iOS-worktrees/astro-website` on a new
   branch `docs/astro-website` from `develop` (its default branch):
@@ -668,8 +668,8 @@ dashboard and are done by the owner; everything else is done by the implementer.
   - [x] Open a pull request in the app repository.
 
 **Automated Verification**:
-- [ ] `npm run check:live -- https://photo-memo.peterkurzok.de` prints no `✗` line.
-- [ ] `gh api repos/pkurzok/Photo-Memory-Web/pages` answers 404.
+- [x] `npm run check:live -- https://photo-memo.peterkurzok.de` prints no `✗` line.
+- [x] `gh api repos/pkurzok/Photo-Memory-Web/pages` answers 404.
 - [x] `dig +short photo-memo.peterkurzok.de` no longer returns `pkurzok.github.io.`.
 - [x] In the app repository's new worktree:
   `make site-assets SITE=/Users/peter.kurzok/ws-privat/Photo-Memory-Web SCREENSHOTS_DIR=/Users/peter.kurzok/ws-privat/Photo-Memory-iOS/Screenshots/screenshots`
