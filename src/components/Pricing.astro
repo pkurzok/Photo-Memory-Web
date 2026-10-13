@@ -1,0 +1,36 @@
+---
+import { content, type Lang } from '../data/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { pricing } = content[Astro.props.lang];
+---
+
+<section id="pricing" class="section section-alternate">
+  <div class="container">
+    <div class="section-header">
+      <h2>{pricing.title}</h2>
+      <p class="section-description">{pricing.description}</p>
+    </div>
+    <div class="pricing-tiers">
+      {
+        pricing.tiers.map((tier) => (
+          <div class:list={['pricing-tier', { 'pricing-tier-highlighted': tier.highlighted }]}>
+            <div class="pricing-tier-head">
+              <h3 class="pricing-tier-name">{tier.name}</h3>
+              {tier.highlighted && <span class="pricing-badge">{pricing.recommended}</span>}
+            </div>
+            <p class="pricing-tier-text">{tier.text}</p>
+            <p class="pricing-price">
+              <span class="pricing-amount">{tier.price}</span>
+              {/* Only the purchase has a period to name. */}
+              {tier.highlighted && <span class="pricing-period">{pricing.oneTime}</span>}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

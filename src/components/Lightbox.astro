@@ -1,0 +1,48 @@
+---
+import { content, type Lang } from '../data/site';
+import Icon from './Icon.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { screenshots } = content[Astro.props.lang];
+---
+
+<dialog class="lightbox" aria-labelledby="lightbox-caption">
+  <div class="lightbox-content">
+    <div class="lightbox-header">
+      <h3 id="lightbox-caption"></h3>
+      <button type="button" class="lightbox-close" aria-label={screenshots.close}><Icon name="close" /></button>
+    </div>
+    <div class="lightbox-body">
+      <img alt="" class="lightbox-image" />
+    </div>
+  </div>
+</dialog>
+
+<script is:inline>
+  (() => {
+    const dialog = document.querySelector('.lightbox');
+    const caption = dialog.querySelector('#lightbox-caption');
+    const image = dialog.querySelector('.lightbox-image');
+
+    for (const trigger of document.querySelectorAll('.screenshot-trigger')) {
+      trigger.addEventListener('click', () => {
+        const { full, alt } = trigger.dataset;
+        // Clear first, so that the previous screenshot is not shown while the next one loads.
+        image.removeAttribute('src');
+        image.src = full;
+        image.alt = alt;
+        caption.textContent = alt;
+        dialog.showModal();
+      });
+    }
+
+    dialog.querySelector('.lightbox-close').addEventListener('click', () => dialog.close());
+    // The content fills the dialog, so a click that lands on the dialog itself hit the backdrop.
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+  })();
+</script>
