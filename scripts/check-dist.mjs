@@ -29,11 +29,28 @@ const policies = {
   en: { file: 'privacy/index.html', title: 'Privacy Policy' },
   de: { file: 'de/privacy/index.html', title: 'Datenschutzerklärung' },
 };
+const site = 'https://photo-memo.peterkurzok.de';
+const sitemapUrls = ['/', '/de/', '/privacy/', '/de/privacy/'].map((page) => site + page);
+const expectedRedirects = [
+  ['/privacy.html', '/privacy/', '301'],
+  ['/de/privacy.html', '/de/privacy/', '301'],
+  ['/imprint.html', imprint, '301'],
+  ['/de/imprint.html', imprint, '301'],
+];
+const aasaFiles = ['.well-known/apple-app-site-association', 'apple-app-site-association'];
 const homeOf = (lang) => (lang === 'en' ? 'index.html' : `${lang}/index.html`);
 
 const expectedFiles = [
   ...langs.map(homeOf),
   ...langs.map((lang) => policies[lang].file),
+  's/index.html',
+  '404.html',
+  'feed.rss',
+  'sitemap.xml',
+  'robots.txt',
+  '_headers',
+  '_redirects',
+  ...aasaFiles,
   'images/app-icon.png',
   ...badges.map((file) => `images/${file}`),
   ...langs.flatMap((lang) => screenshotNames.map((file) => `images/screenshots/${lang}/${file}`)),
@@ -86,6 +103,45 @@ for (const lang of langs) {
   );
 }
 
+// Universal links: both copies of the association file are published unchanged, as JSON
+const aasa = await Promise.all(
+  aasaFiles.flatMap((file) => [path.join('public', file), path.join(dist, file)]).map((file) =>
+    existsSync(file) ? readFile(file) : null,
+  ),
+);
+for (const [index, file] of aasaFiles.entries()) {
+  const [source, built] = [aasa[index * 2], aasa[index * 2 + 1]];
+  check(Boolean(source && built?.equals(source)), `${dist}/${file} is identical to public/`, 'differs or missing');
+}
+check(Boolean(aasa[0] && aasa[2]?.equals(aasa[0])), 'both association files have the same content', 'they differ');
+const headers = files.includes('_headers') ? await read('_headers') : '';
+const unserved = aasaFiles.filter(
+  (file) => !new RegExp(`^/${file.replace('.', '\\.')}\\n\\s+Content-Type: application/json$`, 'm').test(headers),
+);
+check(
+  unserved.length === 0,
+  '_headers serves both association files as application/json',
+  `no rule for ${unserved.map((file) => `/${file}`).join(', ')}`,
+);
+
+// Redirects
+const redirects = files.includes('_redirects')
+  ? (await read('_redirects'))
+      .split('\n')
+      .map((line) => line.trim())
+      .filter((line) => line && !line.startsWith('#'))
+      .map((line) => line.split(/\s+/))
+  : [];
+const redirectSources = redirects.map(([source]) => source);
+const wrongRedirects = expectedRedirects.filter(
+  ([source, target, status]) => !redirects.some((rule) => rule.join(' ') === `${source} ${target} ${status}`),
+);
+check(
+  wrongRedirects.length === 0 && redirects.length === expectedRedirects.length,
+  `_redirects holds the ${expectedRedirects.length} old addresses and nothing else`,
+  `found: ${redirects.map((rule) => rule.join(' ')).join('; ') || 'none'}`,
+);
+
 // Internal links
 const htmlFiles = files.filter((file) => file.endsWith('.html'));
 const html = new Map(await Promise.all(htmlFiles.map(async (file) => [file, await read(file)])));
@@ -102,6 +158,7 @@ for (const [file, content] of html) {
       linkProblems.push(`${file}: "${target}" is not root-relative`);
       continue;
     }
+    if (redirectSources.includes(pathname)) continue;
     const page = pathname ? pageFor(pathname) : file;
     if (!files.includes(page)) {
       const isPage = !path.extname(pathname) && files.includes(pageFor(`${pathname}/`));
@@ -187,7 +244,6 @@ for (const lang of langs) {
 }
 
 // hreflang: a page that names its translations names every language, and each target exists
-const site = 'https://photo-memo.peterkurzok.de';
 const paired = [];
 for (const [file, content] of html) {
   const alternates = [...content.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)"/g)];
@@ -217,6 +273,52 @@ for (const lang of langs) {
 }
 const oldImprint = htmlFiles.filter((file) => html.get(file).includes('imprint.html'));
 check(oldImprint.length === 0, 'no page links to imprint.html', `found in ${oldImprint.join(', ')}`);
+
+// Sitemap and feed
+const sitemap = files.includes('sitemap.xml') ? await read('sitemap.xml') : '';
+const locations = [...sitemap.matchAll(/<loc>([^<]*)<\/loc>/g)].map(([, location]) => location);
+check(
+  locations.length === sitemapUrls.length && sitemapUrls.every((url) => locations.includes(url)),
+  `sitemap.xml lists exactly the ${sitemapUrls.length} pages, without /s/`,
+  `found ${locations.join(', ') || 'none'}`,
+);
+const feed = files.includes('feed.rss') ? await read('feed.rss') : '';
+check(feed.includes(`<atom:link href="${site}/feed.rss"`), 'feed.rss links to itself', 'atom:link missing');
+const robots = files.includes('robots.txt') ? await read('robots.txt') : '';
+check(robots.includes(`Sitemap: ${site}/sitemap.xml`), 'robots.txt names the sitemap', 'line missing');
+
+// Shared-set page: static tags for link previews, kept out of search engines, no navigation
+const share = html.get('s/index.html') ?? '';
+const shareNeeds = [
+  ['noindex', '<meta name="robots" content="noindex"'],
+  ['og:title', '<meta property="og:title" content="A Photo Memo+ picture set"'],
+  ['og:description', '<meta property="og:description" content="Someone shared a set of photos'],
+  ['og:image', `<meta property="og:image" content="${site}/images/app-icon.png"`],
+  ['og:url', `<meta property="og:url" content="${site}/s/"`],
+  ['the Smart App Banner tag', '<meta name="apple-itunes-app"'],
+  ['the app-argument script', 'app-argument='],
+  ['its German text', 'lang="de"'],
+].filter(([, needle]) => !share.includes(needle));
+check(
+  shareNeeds.length === 0,
+  's/index.html is noindex, has static og tags and the banner script',
+  `missing: ${shareNeeds.map(([label]) => label).join(', ')}`,
+);
+check(
+  !share.includes('nav-link') && !share.includes('hreflang'),
+  's/index.html has no navigation and no language link',
+  'found one',
+);
+
+// 404 page
+const notFound = html.get('404.html') ?? '';
+check(
+  notFound.includes('<meta name="robots" content="noindex"') &&
+    !notFound.includes('rel="canonical"') &&
+    langs.every((lang) => notFound.includes(`href="${lang === 'en' ? '/' : `/${lang}/`}" class="button"`)),
+  '404.html is noindex, has no canonical URL and leads to the homepage of every language',
+  'one of the three is wrong',
+);
 
 if (failures > 0) {
   console.log(`${failures} ${failures === 1 ? 'check' : 'checks'} failed.`);

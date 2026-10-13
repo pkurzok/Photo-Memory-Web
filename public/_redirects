@@ -1,0 +1,6 @@
+# The old addresses of the policy, which the App Store listings link to, and of the imprint,
+# which now is the shared page of all apps.
+/privacy.html /privacy/ 301
+/de/privacy.html /de/privacy/ 301
+/imprint.html https://apps.peterkurzok.de/imprint/ 301
+/de/imprint.html https://apps.peterkurzok.de/imprint/ 301
