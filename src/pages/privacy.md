@@ -8,7 +8,7 @@ path: /privacy/
 
 # Privacy Policy
 
-*Last updated: 13 October 2026*
+*Last updated: 14 October 2026*
 
 Photo Memo+ is a free app for iPhone and iPad, made by Peter Kurzok, with an optional one-off Pro purchase. This page explains what the app does and does not do with your data.
 
@@ -39,6 +39,33 @@ The free version can show a single small banner below the board, supplied by **K
 The banner reports which advert was shown and whether it was tapped. That is **not tied to your name, your Apple Account or any identifier we could use to recognise you**, and it is not used to track you across other companies’ apps or websites. It never includes your photos, your picture sets or the player names you type.
 
 Kickstart Exchange’s own privacy notice: [https://exchange.kickstart.tools/privacy](https://exchange.kickstart.tools/privacy)
+
+## Feature requests — Kickstart Signal
+
+On iOS 18 and later, Settings has a **Feature Requests** board where you can suggest new features, vote for other people’s ideas and comment on them. It is run by **Kickstart Signal**. If you never open that row, the app never connects to the service.
+
+**While you browse the board**, the app sends the service its own app key, its bundle identifier and the version of the Signal software. If the service asks for it, the app also sends Apple’s signed receipt for the app itself, which proves the request comes from the genuine app. None of that describes you.
+
+**When you first vote, suggest an idea or write a comment**, a **random installation identifier** is created on the device. It is not derived from the device or from anything else, and it is used for nothing but this board. From then on, the service receives:
+
+- that identifier,
+- the text you write — an idea’s title and description, or a comment,
+- your votes,
+- whether Pro is active, so ideas from paying customers can be marked.
+
+Like any server, the provider sees your IP address; by its own account it is used only temporarily to prevent abuse and is not stored.
+
+**What is never sent:** no name, no e-mail address, no account, no advertising or device identifier, no photos, no picture sets and no player names. Please do not write anything personal into an idea or a comment.
+
+**Moderation.** Every idea and comment stays private until **we** have reviewed and published it. We may edit or delete it. Nothing is ever shown with a name.
+
+**Who receives it.** Hudson Heavy Industries Ltd, 37 Great Pulteney Street, Bath, BA2 4DA, United Kingdom (company number 11883499), operator of Kickstart Signal at `api.kickstart.tools`, delivered over Cloudflare’s network. The United Kingdom is covered by the EU’s adequacy decision.
+
+**How long.** Ideas, comments and votes are kept as long as the board exists. Because the service cannot tell who wrote what, a contribution of yours is deleted on request to the contact address below — tell us what it said.
+
+**How to avoid it.** Do not open the Feature Requests row.
+
+Kickstart Signal’s own privacy notice: [https://signal.kickstart.tools/privacy](https://signal.kickstart.tools/privacy)
 
 ## Crash reporting — Sentry
 
@@ -72,7 +99,7 @@ Apple’s privacy policy: [https://www.apple.com/legal/privacy/](https://www.app
 
 ## Children
 
-The app plays with the pictures that are already on the device, and with any picture set someone shares with you. There is no user-generated content, no chat and no link out to the open web from inside the game. The free version shows one banner advertising other apps, described above; Pro removes it.
+The app plays with the pictures that are already on the device, and with any picture set someone shares with you. The only place anyone can write anything is the Feature Requests board in Settings (iOS 18 and later), described above. Nothing written there is visible to anyone until we have reviewed and published it, and nothing is ever shown with a name. From inside the game there is still no way onto the open web. The free version shows one banner advertising other apps, described above; Pro removes it.
 
 ## Changes to this policy
 
