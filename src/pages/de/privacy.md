@@ -8,7 +8,7 @@ path: /de/privacy/
 
 # Datenschutzerklärung
 
-*Stand: 13. Oktober 2026*
+*Stand: 23. Oktober 2026*
 
 Photo Memo+ ist eine kostenlose App für iPhone und iPad von Peter Kurzok, mit einem optionalen einmaligen Pro-Kauf. Diese Seite erklärt, was die App mit deinen Daten macht — und was nicht.
 
@@ -21,6 +21,12 @@ Die Bilder, die du auswählst, werden in den eigenen Speicher der App auf deinem
 Die App fragt iOS erst in dem Moment nach Zugriff auf deine Fotomediathek, in dem du Bilder auswählst; was übergeben wird, entscheidet iOS. Wird die App gelöscht, verschwinden die Kopien mit ihr.
 
 Die Spielernamen, die du eingibst, deine Highscores und deine Einstellungen liegen auf dieselbe Weise auf dem Gerät und werden nie hochgeladen.
+
+## Fotobeschreibungen für VoiceOver
+
+Mit VoiceOver kann Photo Memo+ deine Fotos in wenigen Worten beschreiben — „Hund auf dem Sofa“ statt „Foto 3“ —, damit sich auch blinde und sehbehinderte Mitspielende die Karten merken können. Auf iPhones mit Apple Intelligence (ab iOS 27) **entstehen die Beschreibungen auf deinem Gerät**, durch Apples Modell auf dem Gerät. Deine Fotos werden dafür nirgendwohin geschickt, weder an uns noch an Apple.
+
+Die Beschreibungen werden auf deinem Gerät neben dem Bilderset gespeichert, zu dem sie gehören, und mit ihm gelöscht. **Sie werden nie geteilt**: Ein Bilderset, das du verschickst, enthält nur die Fotos, und das Gerät der Empfänger beschreibt sie selbst. Kein Analyse-Ereignis enthält eine Beschreibung. Du kannst die Funktion in den Einstellungen unter *VoiceOver* ausschalten.
 
 ## Bildersets teilen
 
@@ -39,6 +45,33 @@ Die kostenlose Version kann unter dem Spielfeld ein einzelnes kleines Banner zei
 Das Banner meldet, welche Anzeige gezeigt und ob sie angetippt wurde. Das ist **weder mit deinem Namen noch mit deinem Apple-Account noch mit einer Kennung verknüpft, an der wir dich wiedererkennen könnten**, und es wird nicht dazu verwendet, dich über Apps und Websites anderer Anbieter hinweg zu verfolgen. Deine Fotos, deine Bildersets und die Spielernamen, die du eingibst, sind nie enthalten.
 
 Datenschutzhinweis von Kickstart Exchange: [https://exchange.kickstart.tools/privacy](https://exchange.kickstart.tools/privacy)
+
+## Feature-Ideen — Kickstart Signal
+
+Ab iOS 18 gibt es in den Einstellungen die Seite **Feature-Ideen**. Dort kannst du neue Funktionen vorschlagen, für die Ideen anderer stimmen und sie kommentieren. Betrieben wird sie von **Kickstart Signal**. Solange du diese Zeile nicht öffnest, baut die App keine Verbindung zu dem Dienst auf.
+
+**Beim Ansehen der Seite** übermittelt die App dem Dienst ihren eigenen App-Schlüssel, ihre Bundle-Kennung und die Version der Signal-Software. Fragt der Dienst danach, schickt die App zusätzlich Apples signierten Kaufbeleg für die App selbst, der belegt, dass die Anfrage von der echten App kommt. Nichts davon beschreibt dich.
+
+**Bei deiner ersten Stimme, Idee oder deinem ersten Kommentar** wird auf dem Gerät eine **zufällige Installationskennung** erzeugt. Sie ist weder vom Gerät noch von irgendetwas anderem abgeleitet und dient ausschließlich dieser Seite. Ab dann erhält der Dienst:
+
+- diese Kennung,
+- den Text, den du schreibst — Titel und Beschreibung einer Idee oder einen Kommentar,
+- deine Stimmen,
+- ob Pro aktiv ist, damit Ideen zahlender Kundinnen und Kunden markiert werden können.
+
+Wie jeder Server sieht der Anbieter deine IP-Adresse; nach eigener Angabe nutzt er sie nur vorübergehend zur Missbrauchsabwehr und speichert sie nicht.
+
+**Was nie übertragen wird:** kein Name, keine E-Mail-Adresse, kein Konto, keine Werbe- oder Gerätekennung, keine Fotos, keine Bildersets und keine Spielernamen. Bitte schreib nichts Persönliches in eine Idee oder einen Kommentar.
+
+**Moderation.** Jede Idee und jeder Kommentar bleibt privat, bis **wir** sie geprüft und veröffentlicht haben. Wir dürfen sie bearbeiten oder löschen. Nichts wird jemals mit einem Namen angezeigt.
+
+**Empfänger.** Hudson Heavy Industries Ltd, 37 Great Pulteney Street, Bath, BA2 4DA, Vereinigtes Königreich (Company Number 11883499), Betreiber von Kickstart Signal unter `api.kickstart.tools`, ausgeliefert über das Netz von Cloudflare. Für das Vereinigte Königreich gilt der Angemessenheitsbeschluss der EU.
+
+**Speicherdauer.** Ideen, Kommentare und Stimmen bleiben gespeichert, solange es die Seite gibt. Da der Dienst nicht erkennen kann, wer was geschrieben hat, löschen wir einen Beitrag von dir auf Anfrage an die unten genannte Kontaktadresse — sag uns dazu, was darin stand.
+
+**So vermeidest du es.** Öffne die Zeile Feature-Ideen nicht.
+
+Datenschutzhinweis von Kickstart Signal: [https://signal.kickstart.tools/privacy](https://signal.kickstart.tools/privacy)
 
 ## Absturzberichte — Sentry
 
@@ -72,7 +105,7 @@ Datenschutzerklärung von Apple: [https://www.apple.com/legal/privacy/](https://
 
 ## Kinder
 
-Die App spielt mit den Bildern, die ohnehin auf dem Gerät liegen, und mit Bildersets, die jemand mit dir teilt. Es gibt keine von Nutzern eingestellten Inhalte, keinen Chat und aus dem Spiel heraus keinen Weg ins offene Netz. Die kostenlose Version zeigt ein Banner mit Werbung für andere Apps, wie oben beschrieben; mit Pro verschwindet es.
+Die App spielt mit den Bildern, die ohnehin auf dem Gerät liegen, und mit Bildersets, die jemand mit dir teilt. Der einzige Ort, an dem überhaupt jemand etwas schreiben kann, ist die Seite Feature-Ideen in den Einstellungen (ab iOS 18), oben beschrieben. Was dort geschrieben wird, ist für niemanden sichtbar, bevor wir es geprüft und veröffentlicht haben, und nichts wird jemals mit einem Namen angezeigt. Aus dem Spiel heraus gibt es weiterhin keinen Weg ins offene Netz. Die kostenlose Version zeigt ein Banner mit Werbung für andere Apps, wie oben beschrieben; mit Pro verschwindet es.
 
 ## Änderungen dieser Erklärung
 

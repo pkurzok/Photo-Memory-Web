@@ -122,6 +122,16 @@ export const de: Content = {
         text: 'Beides in den Einstellungen abschaltbar.',
       },
       {
+        icon: 'universal-access',
+        title: 'VoiceOver beschreibt die Karten',
+        text: 'Eine aufgedeckte Karte sagt, was sie zeigt — „Mops in einer Decke“ statt „Foto 1“. Eigene Fotos werden auf dem Gerät beschrieben (iOS 27, Apple Intelligence). Kostenlos.',
+      },
+      {
+        icon: 'lightbulb-fill',
+        title: 'Sag uns, was als Nächstes kommt',
+        text: 'Schlag in den Einstellungen Funktionen vor und stimm über Ideen ab (ab iOS 18). Kostenlos.',
+      },
+      {
         icon: 'phone-fill',
         title: 'iPhone und iPad',
         text: 'Eine App, beide Geräte — und Pro gilt ebenfalls für beide.',
