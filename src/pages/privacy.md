@@ -8,7 +8,7 @@ path: /privacy/
 
 # Privacy Policy
 
-*Last updated: 14 October 2026*
+*Last updated: 23 October 2026*
 
 Photo Memo+ is a free app for iPhone and iPad, made by Peter Kurzok, with an optional one-off Pro purchase. This page explains what the app does and does not do with your data.
 
@@ -21,6 +21,12 @@ The pictures you choose are copied into the app’s own storage on your device, 
 The app asks iOS for access to your photo library only at the moment you pick pictures, and iOS decides what it hands over. Removing the app removes its copies with it.
 
 The player names you type, your high scores and your settings are stored on the device in the same way, and are never uploaded.
+
+## VoiceOver photo descriptions
+
+With VoiceOver on, Photo Memo+ can describe your photos in a few words — “dog on the sofa” instead of “photo 3” — so a blind or partially sighted player can remember the cards. On iPhones with Apple Intelligence (iOS 27 and later), **the descriptions are made on your device** by Apple’s on-device model. Your photos are not sent anywhere to be described, not to us and not to Apple.
+
+The descriptions are stored on your device next to the picture set they belong to, and are deleted with it. **They are never shared**: a picture set you send contains the photos only, and the recipient’s device describes them itself. No analytics event carries a description. You can switch the feature off in Settings under *VoiceOver*.
 
 ## Sharing picture sets
 
