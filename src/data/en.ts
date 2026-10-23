@@ -122,6 +122,16 @@ export const en: Content = {
         text: 'Both switchable in Settings.',
       },
       {
+        icon: 'universal-access',
+        title: 'VoiceOver describes the cards',
+        text: 'A face-up card reads what it shows — “pug in a blanket”, not “photo 1”. Your own photos are described on the device (iOS 27, Apple Intelligence). Free.',
+      },
+      {
+        icon: 'lightbulb-fill',
+        title: 'Tell us what’s next',
+        text: 'Suggest features and vote on ideas in Settings (iOS 18 and later). Free.',
+      },
+      {
         icon: 'phone-fill',
         title: 'iPhone and iPad',
         text: 'One app, both devices — and Pro covers both too.',
